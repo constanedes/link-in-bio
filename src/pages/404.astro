@@ -1,0 +1,10 @@
+---
+import Link from "../components/Link.astro";
+import Layout from "../layouts/Layout.astro";
+Astro.response.status = 404;
+Astro.response.statusText = "Not found";
+---
+
+<Layout title="My Links">
+    <Link href="/">Return to Home</Link>
+</Layout>

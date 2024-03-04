@@ -1,0 +1,14 @@
+---
+interface Props {
+    href: string;
+    target?: "_blank" | "_parent" | "_self" | "_top"
+    clasess?: string[]
+    rest?: any;
+}
+
+const { href, target, rest} = Astro.props;
+---
+
+<a href={href} target={target} {...rest}>
+    <slot />
+</a>

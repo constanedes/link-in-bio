@@ -1,0 +1,16 @@
+---
+import Link from "./Link.astro";
+import data from "../data/data.json";
+import type ILink from "../models/ILink";
+---
+
+{
+    data.map((value: ILink, _index: number) => {
+        return (
+            <>
+                <br />
+                <Link href={value.href}>{value.text}</Link>
+            </>
+        );
+    })
+}
