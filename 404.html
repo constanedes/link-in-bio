@@ -7,7 +7,7 @@
   <meta name="robots" content="noindex">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <script>
-    try { var t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+    try { const theme = localStorage.getItem("theme"); if (theme) document.documentElement.dataset.theme = theme; } catch { /* private mode: keep the system theme */ }
   </script>
   <!-- Absolute paths (/...) because this page is served from any missing URL -->
   <link rel="preload" href="/fonts/space-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -41,6 +41,7 @@
   <script type="module">
     import { drawBackground } from "/bg.js";
     import { icon } from "/icons.js";
+
     fetch("/data/site.json")
       .then((r) => r.json())
       .then(({ background }) => drawBackground(background))

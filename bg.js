@@ -38,7 +38,7 @@ function drawGrid(bg, mode) {
 
   const both = gridMode === "both";
   const h = both ? 0.42 : 0.28; // horizon height: 0 = top of screen, 1 = bottom
-  const vx = 0.72;              // vanishing point, horizontal position (0.5 = centered)
+  const vx = 0.72; // vanishing point, horizontal position (0.5 = centered)
   bg.style.setProperty("--h", `${h * 100}%`);
 
   /** @param {number} v fraction -> viewBox unit (0-100) */
@@ -58,7 +58,7 @@ function drawGrid(bg, mode) {
 
   // Lines across: spacing shrinks geometrically toward the horizon
   for (let j = 0; j < 12; j++) {
-    const y = h + (1 - h) * Math.pow(0.7, j + 0.3);
+    const y = h + (1 - h) * 0.7 ** (j + 0.3);
     d += `M0 ${n(y)}H100`;
     if (both && 2 * h - y > 0) d += `M0 ${n(2 * h - y)}H100`;
   }

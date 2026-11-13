@@ -21,7 +21,7 @@
   <!-- Apply the saved theme before first paint to avoid a flash -->
   <script>
     document.documentElement.classList.add("js"); // CSS hides the card until JS fills it (no CLS)
-    try { var t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+    try { const theme = localStorage.getItem("theme"); if (theme) document.documentElement.dataset.theme = theme; } catch { /* private mode: keep the system theme */ }
     // Safety net: reveal anyway if the module fails to load
     setTimeout(() => document.querySelector("main")?.classList.add("ready"), 2500);
   </script>

@@ -1,11 +1,11 @@
-import { icon } from "./icons.js";
 import { drawBackground } from "./bg.js";
+import { icon } from "./icons.js";
 
-/** @typedef {{ label: string, url: string, icon: string, color?: string, text?: string, download?: boolean, hidden?: boolean }} Link */
+/** @typedef {{ label: string, url: string, icon: string, color?: string, text?: string, download?: boolean, visible?: boolean }} Link */
 
-/** @typedef {{ label: string, url: string, icon: string, hidden?: boolean }} Social */
+/** @typedef {{ label: string, url: string, icon: string, visible?: boolean }} Social */
 
-/** @typedef {{ initials: string, avatar: string, name: string, role: string, bio: string }} Profile */
+/** @typedef {{ initials: string, avatar: string, avatarAlt: string, name: string, role: string, bio: string }} Profile */
 
 /**
  * Page background configuration.
@@ -29,7 +29,10 @@ function anchor({ url, label }, className) {
   a.href = url;
   a.className = className;
   a.textContent = label;
-  if (/^https?:/.test(url)) { a.target = "_blank"; a.rel = "noopener noreferrer"; }
+  if (/^https?:/.test(url)) {
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+  }
   return a;
 }
 
@@ -44,6 +47,15 @@ function iconTile(name) {
   span.innerHTML = icon(name);
   span.setAttribute("aria-hidden", "true");
   return span;
+}
+
+/**
+ * Element by id; the markup guarantees it exists.
+ * @param {string} id
+ * @returns {HTMLElement}
+ */
+function byId(id) {
+  return /** @type {HTMLElement} */ (document.getElementById(id));
 }
 
 /** Fetches the editable site content. @returns {Promise<SiteData>} */
@@ -76,41 +88,44 @@ function render(site) {
   avatar.textContent = profile.initials;
   if (profile.avatar) {
     const img = new Image();
-    img.alt = "";
+    img.alt = profile.avatarAlt || ""; // empty alt = decorative image (still accessible)
     img.width = img.height = 128;
     img.decoding = "async";
     img.onload = () => avatar.replaceChildren(img);
     img.src = profile.avatar;
   }
-  /** @type {HTMLElement} */ (document.getElementById("name")).textContent = profile.name;
-  /** @type {HTMLElement} */ (document.getElementById("role")).textContent = profile.role;
-  /** @type {HTMLElement} */ (document.getElementById("bio")).textContent = profile.bio;
+  byId("name").textContent = profile.name;
+  byId("role").textContent = profile.role;
+  byId("bio").textContent = profile.bio;
 
   // ----- Main link buttons (the whole button is the link) -----
-  /** @type {HTMLElement} */ (document.getElementById("links")).append(
+  byId("links").append(
     ...links
-      .filter((l) => !l.hidden)
+      .filter((l) => l.visible !== false)
       .map((l) => {
         const a = anchor(l, "link");
         if (l.download) a.setAttribute("download", "");
-        else if (/^https?:/.test(l.url)) { a.target = "_blank"; a.rel = "noopener noreferrer"; }
+        else if (/^https?:/.test(l.url)) {
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+        }
         if (l.color) a.style.setProperty("--brand", l.color);
         if (l.text) a.style.setProperty("--text", l.text);
         a.append(iconTile(l.icon));
         return a;
-      })
+      }),
   );
 
   // ----- Social icon row -----
-  /** @type {HTMLElement} */ (document.getElementById("socials")).append(
+  byId("socials").append(
     ...socials
-      .filter((s) => !s.hidden)
+      .filter((s) => s.visible !== false)
       .map((s) => {
         const a = anchor(s, "tile");
         a.setAttribute("aria-label", s.label);
         a.innerHTML = icon(s.icon, 22);
         return a;
-      })
+      }),
   );
 }
 
@@ -131,7 +146,11 @@ class ThemeToggle extends HTMLElement {
   toggle() {
     const next = this.isDark ? "light" : "dark";
     document.documentElement.dataset.theme = next;
-    try { localStorage.setItem("theme", next); } catch { /* private mode: keep theme in memory only */ }
+    try {
+      localStorage.setItem("theme", next);
+    } catch {
+      /* private mode: keep theme in memory only */
+    }
     this.render();
   }
   render() {
@@ -147,10 +166,11 @@ loadSite()
   .then((site) => {
     render(site);
     // Hydration done: reveal the card in its final position (see style.css)
-    /** @type {HTMLElement} */ (document.querySelector("main")).classList.add("ready");
+    document.querySelector("main")?.classList.add("ready");
   })
   .catch((err) => {
     console.error("[links] failed to load content:", err);
     // Reveal the empty card anyway so the page is never stuck invisible
-    /** @type {HTMLElement} */ (document.querySelector("main"))?.classList.add("ready");
+    /** @type {HTMLElement} */
+    document.querySelector("main")?.classList.add("ready");
   });

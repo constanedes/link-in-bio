@@ -2,23 +2,60 @@
   "profile": {
     "initials": "CE",
     "avatar": "assets/avatar.jpg",
+    "avatarAlt": "Foto de Constantino Edes",
     "name": "Constantino Edes",
     "role": "Software Developer",
     "bio": "Backend developer focused on .NET, DevOps and data. Find my work, CV and contact below."
   },
   "links": [
-    { "label": "Portfolio", "url": "https://constantinoedes.dev", "icon": "globe", "color": "#dbeafe", "text": "#1e40af" },
-    { "label": "CV", "url": "assets/cv.pdf", "icon": "file", "color": "#ffedd5", "text": "#9a3412" },
-    { "label": "GitHub", "url": "https://github.com/constanedes", "icon": "github", "color": "#e4e4e7", "text": "#27272a" },
-    { "label": "LinkedIn", "url": "https://www.linkedin.com/in/constanedes", "icon": "linkedin", "color": "#e0f2fe", "text": "#075985" },
-    { "label": "Email", "url": "mailto:hola@constantinoedes.dev", "icon": "mail", "color": "#fee2e2", "text": "#991b1b" },
-    { "label": "Save contact", "url": "assets/constantino-edes.vcf", "icon": "user", "download": true, "color": "#dcfce7", "text": "#166534" }
+    {
+      "label": "Portfolio",
+      "url": "https://constantinoedes.dev",
+      "icon": "globe",
+      "color": "#dbeafe",
+      "text": "#1e40af",
+      "visible": true
+    },
+    { "label": "CV", "url": "assets/cv.pdf", "icon": "file", "color": "#ffedd5", "text": "#9a3412", "visible": true },
+    {
+      "label": "GitHub",
+      "url": "https://github.com/constanedes",
+      "icon": "github",
+      "color": "#e4e4e7",
+      "text": "#27272a",
+      "visible": true
+    },
+    {
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/in/constanedes",
+      "icon": "linkedin",
+      "color": "#e0f2fe",
+      "text": "#075985",
+      "visible": true
+    },
+    {
+      "label": "Email",
+      "url": "mailto:hola@constantinoedes.dev",
+      "icon": "mail",
+      "color": "#fee2e2",
+      "text": "#991b1b",
+      "visible": true
+    },
+    {
+      "label": "Save contact",
+      "url": "assets/constantino-edes.vcf",
+      "icon": "user",
+      "download": true,
+      "color": "#dcfce7",
+      "text": "#166534",
+      "visible": true
+    }
   ],
   "socials": [
-    { "label": "X", "url": "https://x.com/constanedes", "icon": "x" },
-    { "label": "DEV", "url": "https://dev.to/constanedes", "icon": "devto" },
-    { "label": "Luma", "url": "https://lu.ma/constanedes", "icon": "luma" },
-    { "label": "Discord", "url": "https://discord.gg/constantino", "icon": "discord" }
+    { "label": "X", "url": "https://x.com/constanedes", "icon": "x", "visible": true },
+    { "label": "DEV", "url": "https://dev.to/constanedes", "icon": "devto", "visible": true },
+    { "label": "Luma", "url": "https://lu.ma/constanedes", "icon": "luma", "visible": true },
+    { "label": "Discord", "url": "https://discord.gg/constantino", "icon": "discord", "visible": true }
   ],
   "background": {
     "style": "glow",

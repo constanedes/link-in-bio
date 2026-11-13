@@ -2,10 +2,9 @@
 backend:
   name: github
   repo: constanedes/link-in-bio
-  branch: main            # commits land on main; merge to development as you like
+  branch: main # commits land on main; merge to development as you like
   # While developing locally, run `npx decap-server` and uncomment:
   # local_backend: true
-
 # Where uploaded media (avatar, og image...) is stored in the repo
 media_folder: "assets/uploads"
 public_folder: "/assets/uploads"
@@ -32,6 +31,13 @@ collections:
             fields:
               - { name: "initials", label: "Initials (avatar fallback)", widget: "string" }
               - { name: "avatar", label: "Avatar", widget: "image", required: false, media_library: true }
+              - {
+                  name: "avatarAlt",
+                  label: "Avatar alt text",
+                  widget: "string",
+                  required: false,
+                  hint: "Describe the photo for screen readers. Empty = decorative.",
+                }
               - { name: "name", label: "Name", widget: "string" }
               - { name: "role", label: "Role", widget: "string" }
               - { name: "bio", label: "Bio", widget: "text" }
@@ -46,11 +52,45 @@ collections:
               - name: "icon"
                 label: "Icon"
                 widget: "select"
-                options: ["globe", "file", "home", "mail", "user", "sun", "moon", "github", "linkedin", "whatsapp", "x", "devto", "luma", "discord"]
-              - { name: "color", label: "Background color", widget: "string", required: false, hint: "Pastel hex like #dbeafe. Leave empty for neutral." }
-              - { name: "text", label: "Text color", widget: "string", required: false, hint: "Dark hex like #1e40af. Leave empty for neutral." }
-              - { name: "download", label: "Download instead of navigate", widget: "boolean", default: false, required: false }
-              - { name: "hidden", label: "Hidden", widget: "boolean", default: false, required: false }
+                options:
+                  [
+                    "globe",
+                    "file",
+                    "home",
+                    "mail",
+                    "user",
+                    "sun",
+                    "moon",
+                    "github",
+                    "linkedin",
+                    "whatsapp",
+                    "x",
+                    "devto",
+                    "luma",
+                    "discord",
+                  ]
+              - {
+                  name: "color",
+                  label: "Background color",
+                  widget: "string",
+                  required: false,
+                  hint: "Pastel hex like #dbeafe. Leave empty for neutral.",
+                }
+              - {
+                  name: "text",
+                  label: "Text color",
+                  widget: "string",
+                  required: false,
+                  hint: "Dark hex like #1e40af. Leave empty for neutral.",
+                }
+              - {
+                  name: "download",
+                  label: "Download instead of navigate",
+                  widget: "boolean",
+                  default: false,
+                  required: false,
+                }
+              - { name: "visible", label: "Visible", widget: "boolean", default: true, required: false }
 
           - name: "socials"
             label: "Social icons"
@@ -62,8 +102,24 @@ collections:
               - name: "icon"
                 label: "Icon"
                 widget: "select"
-                options: ["globe", "file", "home", "mail", "user", "sun", "moon", "github", "linkedin", "whatsapp", "x", "devto", "luma", "discord"]
-              - { name: "hidden", label: "Hidden", widget: "boolean", default: false, required: false }
+                options:
+                  [
+                    "globe",
+                    "file",
+                    "home",
+                    "mail",
+                    "user",
+                    "sun",
+                    "moon",
+                    "github",
+                    "linkedin",
+                    "whatsapp",
+                    "x",
+                    "devto",
+                    "luma",
+                    "discord",
+                  ]
+              - { name: "visible", label: "Visible", widget: "boolean", default: true, required: false }
 
           - name: "background"
             label: "Background"
