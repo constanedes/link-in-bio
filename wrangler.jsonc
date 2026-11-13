@@ -3,6 +3,8 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "link-in-bio",
   "compatibility_date": "2026-11-01",
+  // Required by the Cloudflare Builds preview pipeline (`npx wrangler preview`)
+  "previews": {},
   "assets": {
     "directory": "./dist",
     "html_handling": "auto-trailing-slash",
