@@ -74,7 +74,7 @@ main {
   background: var(--surface-glass);
   backdrop-filter: blur(16px) saturate(1.2);
   -webkit-backdrop-filter: blur(16px) saturate(1.2);
-  border: 1px solid light-dark(var(--line), rgb(255 255 255 / 0.25));
+  border: 1px solid light-dark(rgb(24 24 27 / 0.15), rgb(255 255 255 / 0.25));
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow);
 }
