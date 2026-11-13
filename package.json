@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "python3 tools/dev.py",
+    "build": "sh tools/build.sh",
     "check": "tsc --noEmit",
     "lint": "npm run lint:js && npm run lint:css && npm run lint:html",
     "lint:js": "eslint .",

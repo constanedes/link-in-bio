@@ -47,6 +47,14 @@ Any static hosting works (GitHub Pages, Netlify, Vercel, nginx…). Serve the re
 
 Edit `links.js` — everything else reacts to it. Brand colors (`accent`/`accent2`), background style (`?bg=` / `?grid=` URL params for quick previews) and per-link colors are all defined there. Replace the placeholder assets in `assets/` (avatar, CV, OG image) with your own.
 
+## Deploy (Cloudflare Pages)
+
+- **Build command**: `npm run build`
+- **Build output directory**: `dist`
+- `dist/` contains only what should be public: pages, JS/CSS, `data/`, `assets/`, `fonts/` and `admin/`. Dev tooling, configs and README stay out.
+- `404.html` is served automatically for missing URLs.
+- **Decap OAuth on Cloudflare**: Pages has no built-in OAuth gateway; deploy an OAuth worker (e.g. [decap-cms-oauth-worker](https://github.com/Whiteskins/decap-cms-oauth-worker)) and set its callback in the GitHub OAuth app you create for the CMS.
+
 ## Theme
 
 Follows the visitor's system preference; the toggle stores a manual override in `localStorage`. Colors use `light-dark()` so a single token works in both themes.

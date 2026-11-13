@@ -1,5 +1,6 @@
 {
   "extends": "stylelint-config-standard",
+  "ignoreFiles": ["dist/**"],
   "rules": {
     "custom-property-empty-line-before": null,
     "declaration-empty-line-before": null,
