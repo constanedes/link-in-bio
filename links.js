@@ -44,6 +44,7 @@ export const links = [
 export const socials = [
   { label: "X",       url: "https://x.com/constanedes",        icon: "x" },
   { label: "DEV",     url: "https://dev.to/constanedes",       icon: "devto" },
+  { label: "Luma",    url: "https://lu.ma/constanedes",        icon: "luma" },
   { label: "Discord", url: "https://discord.gg/constantino",   icon: "discord" },
 ];
 
