@@ -9,8 +9,7 @@
     "build": "sh tools/build.sh",
     "check": "tsc --noEmit",
     "lint": "biome lint .",
-    "format": "biome format --write .",
-    "cms": "decap-server"
+    "format": "biome format --write ."
   },
   "devDependencies": {
     "@biomejs/biome": "^2.6.7",

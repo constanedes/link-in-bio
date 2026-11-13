@@ -7,7 +7,7 @@ rm -rf dist
 mkdir dist
 
 for item in index.html 404.html style.css main.js bg.js icons.js \
-            favicon.svg robots.txt data assets fonts admin; do
+            favicon.svg robots.txt data assets fonts; do
   cp -r "$item" dist/
 done
 
