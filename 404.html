@@ -40,9 +40,11 @@
 
   <script type="module">
     import { drawBackground } from "/bg.js";
-    import { background } from "/links.js";
     import { icon } from "/icons.js";
-    drawBackground(background);
+    fetch("/data/site.json")
+      .then((r) => r.json())
+      .then(({ background }) => drawBackground(background))
+      .catch(() => drawBackground({ style: "glow", grid: "floor", accent: "", accent2: "" }));
     document.querySelector('#home [data-icon]').innerHTML = icon("home");
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
