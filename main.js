@@ -107,3 +107,6 @@ class ThemeToggle extends HTMLElement {
   }
 }
 customElements.define("theme-toggle", ThemeToggle);
+
+// Hydration done: reveal the card in its final position (see style.css)
+/** @type {HTMLElement} */ (document.querySelector("main")).classList.add("ready");
