@@ -53,6 +53,7 @@ Edit `links.js` — everything else reacts to it. Brand colors (`accent`/`accent
 - **Build output directory**: `dist`
 - `dist/` contains only what should be public: pages, JS/CSS, `data/`, `assets/`, `fonts/` and `admin/`. Dev tooling, configs and README stay out.
 - `404.html` is served automatically for missing URLs.
+- **Custom domain**: `hi.constantinoedes.dev` — since the zone lives in the same Cloudflare account, add it in Pages → *Custom domains* and Cloudflare creates the records/SSL automatically.
 - **Decap OAuth on Cloudflare**: Pages has no built-in OAuth gateway; deploy an OAuth worker (e.g. [decap-cms-oauth-worker](https://github.com/Whiteskins/decap-cms-oauth-worker)) and set its callback in the GitHub OAuth app you create for the CMS.
 
 ## Theme
