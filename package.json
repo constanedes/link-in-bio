@@ -1,17 +1,14 @@
 {
   "name": "link-in-bio",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Vanilla JS/CSS/HTML link-in-bio page with live-reload dev server",
   "type": "module",
-  "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro check && astro build",
-    "preview": "astro preview",
-    "astro": "astro"
+    "dev": "python3 tools/dev.py",
+    "check": "tsc --noEmit"
   },
-  "dependencies": {
-    "astro": "^4.4.9",
-    "@astrojs/check": "^0.5.6",
-    "typescript": "^5.3.3"
+  "devDependencies": {
+    "typescript": "^5.6.0"
   }
 }

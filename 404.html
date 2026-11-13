@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page not found · Constantino Edes</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <script>
+    try { var t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+  <!-- Absolute paths (/...) because this page is served from any missing URL -->
+  <link rel="preload" href="/fonts/space-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="bg" id="bg" aria-hidden="true"></div>
+  <main>
+    <h1>Page not found</h1>
+    <p class="bio">This page doesn't exist or was moved.</p>
+    <nav id="links">
+      <a class="link" id="home" href="/"><span>Back to home</span></a>
+    </nav>
+  </main>
+
+  <script type="module">
+    import { icon } from "/icons.js";
+    import { drawBackground } from "/bg.js";
+    import { background } from "/links.js";
+    drawBackground(background);
+    document.getElementById("home").insertAdjacentHTML("beforeend", `<span class="tile">${icon("home")}</span>`);
+  </script>
+</body>
+</html>

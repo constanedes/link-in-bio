@@ -1,54 +1,36 @@
-# Astro Starter Kit: Basics
+# link-in-bio
+
+Plain **HTML + CSS + JavaScript** — no framework, no build step.
+
+A link-in-bio page: profile card, link buttons, social icons, dark/light theme and a configurable animated background.
+
+## Run locally (with live reload)
 
 ```sh
-npm create astro@latest -- --template basics
+python3 tools/dev.py          # http://localhost:8080
+# optional type-checking: npm install && npm run check
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## Deploy
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Any static hosting works (GitHub Pages, Netlify, Vercel, nginx…). Serve the repo root — `index.html` is the entry point, and `404.html` is already wired for the not-found page.
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+## Structure
 
-## 🚀 Project Structure
+| File | Purpose |
+| --- | --- |
+| `index.html` / `404.html` | Markup; the JS fills name, bio and lists |
+| `style.css` | All styles; design tokens at the top control the whole look |
+| `links.js` | **Your content**: profile, links, socials, background (fully JSDoc-typed) |
+| `main.js` | Renders profile/links/socials + the `<theme-toggle>` web component |
+| `bg.js` | Background styles: `glow`, `grid`, `dots`, `none` |
+| `icons.js` | Inline SVG icon set (no extra requests) |
+| `tools/dev.py` | Stdlib-only dev server with live reload |
 
-Inside of your Astro project, you'll see the following folders and files:
+## Customize
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── components/
-│   │   └── Card.astro
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+Edit `links.js` — everything else reacts to it. Brand colors (`accent`/`accent2`), background style (`?bg=` / `?grid=` URL params for quick previews) and per-link colors are all defined there. Replace the placeholder assets in `assets/` (avatar, CV, OG image) with your own.
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Theme
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Follows the visitor's system preference; the toggle stores a manual override in `localStorage`. Colors use `light-dark()` so a single token works in both themes.

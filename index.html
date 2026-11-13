@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Constantino Edes · Software Developer</title>
+  <meta name="description" content="Links, CV and contact for Constantino Edes, software developer.">
+  <meta name="theme-color" content="#f5f5f5" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)">
+
+  <!-- Open Graph: preview when the link is shared (replace the image URL) -->
+  <meta property="og:title" content="Constantino Edes">
+  <meta property="og:description" content="Software developer. Links, CV and contact.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://hi.constantinoedes.dev/assets/og.png">
+
+  <!-- Favicon: replace favicon.svg with your own (SVG works everywhere modern).
+       Optional extra: <link rel="apple-touch-icon" href="apple-touch-icon.png"> (180x180 PNG) -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <!-- Apply the saved theme before first paint to avoid a flash -->
+  <script>
+    try { var t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+
+  <!-- Self-hosted font, preloaded so text renders with the right face right away -->
+  <link rel="preload" href="fonts/space-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="main.js"></script>
+</head>
+<body>
+  <!-- Decorative perspective grid, drawn by bg.js -->
+  <div class="bg" id="bg" aria-hidden="true"></div>
+
+  <main>
+    <header class="profile">
+      <!-- Profile photo (or initials fallback), filled by main.js -->
+      <div class="avatar" id="avatar" aria-hidden="true"></div>
+      <div class="who">
+        <h1 id="name"></h1>
+        <p class="role" id="role"></p>
+      </div>
+      <theme-toggle></theme-toggle>
+    </header>
+
+    <p class="bio" id="bio"></p>
+    <nav id="links" aria-label="Links"></nav>
+    <hr>
+    <nav class="socials" id="socials" aria-label="Social networks"></nav>
+  </main>
+</body>
+</html>
