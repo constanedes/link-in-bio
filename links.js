@@ -3,7 +3,7 @@
  * Replace the reference data below with your real data.
  */
 
-/** @typedef {{ label: string, url: string, icon: string, color?: string, text?: string, hidden?: boolean }} Link */
+/** @typedef {{ label: string, url: string, icon: string, color?: string, text?: string, download?: boolean, hidden?: boolean }} Link */
 
 /** @typedef {{ label: string, url: string, icon: string, hidden?: boolean }} Social */
 
@@ -28,14 +28,15 @@ export const profile = {
 };
 
 // color/text are optional: without them the button uses the neutral theme colors.
+// Soft tints keep buttons readable in both themes (dark text on pastel chips).
 /** @type {Link[]} */
 export const links = [
-  { label: "Portfolio", url: "https://constantinoedes.dev",            icon: "globe" },
-  { label: "CV",        url: "assets/cv.pdf",                           icon: "file" },
+  { label: "Portfolio", url: "https://constantinoedes.dev",            icon: "globe",  color: "#dbeafe", text: "#1e40af" },
+  { label: "CV",        url: "assets/cv.pdf",                           icon: "file",   color: "#ffedd5", text: "#9a3412" },
   { label: "GitHub",    url: "https://github.com/constanedes",          icon: "github",   color: "#24292f", text: "#ffffff" },
   { label: "LinkedIn",  url: "https://www.linkedin.com/in/constanedes", icon: "linkedin", color: "#0a66c2", text: "#ffffff" },
-  { label: "Email",     url: "mailto:hola@constantinoedes.dev",         icon: "mail",     color: "#d93025", text: "#ffffff" },
-  { label: "WhatsApp",  url: "https://wa.me/5491100000000",             icon: "whatsapp", color: "#0f9d58", text: "#ffffff" },
+  { label: "Email",     url: "mailto:hola@constantinoedes.dev",         icon: "mail",     color: "#fee2e2", text: "#991b1b" },
+  { label: "Save contact", url: "assets/constantino-edes.vcf",          icon: "user",  download: true, color: "#dcfce7", text: "#166534" },
 ];
 
 // Small icon-only row at the bottom.

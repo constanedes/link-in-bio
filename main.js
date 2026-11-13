@@ -48,6 +48,8 @@ if (profile.avatar) {
     .filter((l) => !l.hidden)
     .map((l) => {
       const a = anchor(l, "link");
+      if (l.download) a.setAttribute("download", "");
+      else if (/^https?:/.test(l.url)) { a.target = "_blank"; a.rel = "noopener noreferrer"; }
       if (l.color) a.style.setProperty("--brand", l.color);
       if (l.text) a.style.setProperty("--text", l.text);
       a.append(iconTile(l.icon));

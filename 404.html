@@ -16,19 +16,35 @@
 <body>
   <div class="bg" id="bg" aria-hidden="true"></div>
   <main>
-    <h1>Page not found</h1>
+    <header class="profile">
+      <div class="avatar" id="avatar" aria-hidden="true">CE</div>
+      <div class="who">
+        <h1>404</h1>
+        <p class="role">Page not found</p>
+      </div>
+      <theme-toggle></theme-toggle>
+    </header>
+
     <p class="bio">This page doesn't exist or was moved.</p>
-    <nav id="links">
-      <a class="link" id="home" href="/"><span>Back to home</span></a>
+    <nav id="links" aria-label="Links">
+      <a class="link" id="home" href="/">
+        <span>Back to home</span>
+        <span class="tile" aria-hidden="true" data-icon="home"></span>
+      </a>
     </nav>
   </main>
 
+  <footer>
+    <p>© <span id="year">2026</span> Constantino Edes</p>
+  </footer>
+
   <script type="module">
-    import { icon } from "/icons.js";
     import { drawBackground } from "/bg.js";
     import { background } from "/links.js";
+    import { icon } from "/icons.js";
     drawBackground(background);
-    document.getElementById("home").insertAdjacentHTML("beforeend", `<span class="tile">${icon("home")}</span>`);
+    document.querySelector('#home [data-icon]').innerHTML = icon("home");
+    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>

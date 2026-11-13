@@ -150,6 +150,9 @@ hr { margin: 2rem 0 1.5rem; border: 0; border-top: 1px solid var(--line); }
   }
 }
 
+/* ---------- Footer (outside the card) ---------- */
+footer { margin-top: 1.5rem; text-align: center; font-size: 0.875rem; color: var(--muted); }
+
 /* ---------- Background: perspective grid ---------- */
 .bg {
   position: fixed; inset: 0; z-index: -1; pointer-events: none;
