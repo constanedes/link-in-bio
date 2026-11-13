@@ -33,8 +33,8 @@ export const profile = {
 export const links = [
   { label: "Portfolio", url: "https://constantinoedes.dev",            icon: "globe",  color: "#dbeafe", text: "#1e40af" },
   { label: "CV",        url: "assets/cv.pdf",                           icon: "file",   color: "#ffedd5", text: "#9a3412" },
-  { label: "GitHub",    url: "https://github.com/constanedes",          icon: "github",   color: "#24292f", text: "#ffffff" },
-  { label: "LinkedIn",  url: "https://www.linkedin.com/in/constanedes", icon: "linkedin", color: "#0a66c2", text: "#ffffff" },
+  { label: "GitHub",    url: "https://github.com/constanedes",          icon: "github",   color: "#e4e4e7", text: "#27272a" },
+  { label: "LinkedIn",  url: "https://www.linkedin.com/in/constanedes", icon: "linkedin", color: "#e0f2fe", text: "#075985" },
   { label: "Email",     url: "mailto:hola@constantinoedes.dev",         icon: "mail",     color: "#fee2e2", text: "#991b1b" },
   { label: "Save contact", url: "assets/constantino-edes.vcf",          icon: "user",  download: true, color: "#dcfce7", text: "#166534" },
 ];
