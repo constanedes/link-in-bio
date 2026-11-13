@@ -20,7 +20,7 @@
 
   /* light-dark(light value, dark value) */
   --bg:           light-dark(#f4f4f5, #09090b);
-  --surface:      light-dark(#ffffff, #141417);
+  --surface:      light-dark(#fff, #141417);
   --surface-glass:light-dark(rgb(255 255 255 / 0.85), rgb(20 20 23 / 0.8));
   --fg:           light-dark(#18181b, #f4f4f5);
   --muted:        light-dark(#52525b, #a1a1aa);

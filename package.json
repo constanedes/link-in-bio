@@ -6,9 +6,19 @@
   "type": "module",
   "scripts": {
     "dev": "python3 tools/dev.py",
-    "check": "tsc --noEmit"
+    "check": "tsc --noEmit",
+    "lint": "npm run lint:js && npm run lint:css && npm run lint:html",
+    "lint:js": "eslint .",
+    "lint:css": "stylelint \"*.css\"",
+    "lint:html": "htmlhint \"*.html\" \"admin/*.html\"",
+    "cms": "decap-server"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.14.0",
+    "htmlhint": "^1.9.2",
+    "stylelint": "^18.0.0",
+    "stylelint-config-standard": "^41.0.0",
     "typescript": "^5.6.0"
   }
 }

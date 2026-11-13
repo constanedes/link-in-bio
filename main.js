@@ -131,7 +131,7 @@ class ThemeToggle extends HTMLElement {
   toggle() {
     const next = this.isDark ? "light" : "dark";
     document.documentElement.dataset.theme = next;
-    try { localStorage.setItem("theme", next); } catch {}
+    try { localStorage.setItem("theme", next); } catch { /* private mode: keep theme in memory only */ }
     this.render();
   }
   render() {

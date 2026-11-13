@@ -1,0 +1,82 @@
+# Decap CMS configuration: https://decapcms.org/docs/configuration-options/
+backend:
+  name: github
+  repo: constanedes/link-in-bio
+  branch: main            # commits land on main; merge to development as you like
+  # While developing locally, run `npx decap-server` and uncomment:
+  # local_backend: true
+
+# Where uploaded media (avatar, og image...) is stored in the repo
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+# Publish mode: edits are committed straight to the branch
+publish_mode: simple
+
+# The whole editable content lives in this single JSON file
+collections:
+  - name: "site"
+    label: "Site"
+    files:
+      - name: "site"
+        label: "Site content"
+        file: "data/site.json"
+        format: "json"
+        editor:
+          preview: false
+        fields:
+          - name: "profile"
+            label: "Profile"
+            widget: "object"
+            collapsed: false
+            fields:
+              - { name: "initials", label: "Initials (avatar fallback)", widget: "string" }
+              - { name: "avatar", label: "Avatar", widget: "image", required: false, media_library: true }
+              - { name: "name", label: "Name", widget: "string" }
+              - { name: "role", label: "Role", widget: "string" }
+              - { name: "bio", label: "Bio", widget: "text" }
+
+          - name: "links"
+            label: "Links"
+            widget: "list"
+            add_to_top: true
+            fields:
+              - { name: "label", label: "Label", widget: "string" }
+              - { name: "url", label: "URL", widget: "string" }
+              - name: "icon"
+                label: "Icon"
+                widget: "select"
+                options: ["globe", "file", "home", "mail", "user", "sun", "moon", "github", "linkedin", "whatsapp", "x", "devto", "luma", "discord"]
+              - { name: "color", label: "Background color", widget: "string", required: false, hint: "Pastel hex like #dbeafe. Leave empty for neutral." }
+              - { name: "text", label: "Text color", widget: "string", required: false, hint: "Dark hex like #1e40af. Leave empty for neutral." }
+              - { name: "download", label: "Download instead of navigate", widget: "boolean", default: false, required: false }
+              - { name: "hidden", label: "Hidden", widget: "boolean", default: false, required: false }
+
+          - name: "socials"
+            label: "Social icons"
+            widget: "list"
+            add_to_top: true
+            fields:
+              - { name: "label", label: "Label (accessibility)", widget: "string" }
+              - { name: "url", label: "URL", widget: "string" }
+              - name: "icon"
+                label: "Icon"
+                widget: "select"
+                options: ["globe", "file", "home", "mail", "user", "sun", "moon", "github", "linkedin", "whatsapp", "x", "devto", "luma", "discord"]
+              - { name: "hidden", label: "Hidden", widget: "boolean", default: false, required: false }
+
+          - name: "background"
+            label: "Background"
+            widget: "object"
+            collapsed: true
+            fields:
+              - name: "style"
+                label: "Style"
+                widget: "select"
+                options: ["glow", "grid", "dots", "none"]
+              - name: "grid"
+                label: "Grid mode (style: grid only)"
+                widget: "select"
+                options: ["floor", "both"]
+              - { name: "accent", label: "Accent color", widget: "string" }
+              - { name: "accent2", label: "Second accent color", widget: "string" }
