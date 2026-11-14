@@ -77,13 +77,14 @@ function splitEmail(link) {
       copyBtn.innerHTML = icon("check");
       copyBtn.classList.add("copied");
       copyBtn.setAttribute("aria-label", "Copied");
+      toast("Email copied to clipboard");
       setTimeout(() => {
         copyBtn.innerHTML = icon("copy");
         copyBtn.classList.remove("copied");
         copyBtn.setAttribute("aria-label", `Copy ${link.label} address`);
       }, 2000);
     } catch {
-      // Clipboard blocked (e.g. without HTTPS): select nothing, do nothing.
+      toast("Couldn't copy — clipboard blocked", "error");
     }
   });
 
@@ -112,6 +113,28 @@ function availableBadge(profile) {
   label.setAttribute("aria-label", `${label.textContent}: open to new opportunities and projects`);
   badge.append(dot, label);
   return badge;
+}
+
+/**
+ * Single-slot toast: every message replaces the previous one and resets its
+ * timeout, so rapid clicks never stack or race. Screen-reader friendly via
+ * the aria-live container in the markup.
+ * @param {string} message
+ * @param {"ok" | "error"} [kind]
+ * @returns {void}
+ */
+let toastTimer = 0;
+function toast(message, kind = "ok") {
+  const el = byId("toast");
+  clearTimeout(toastTimer);
+  el.className = kind;
+  el.textContent = message;
+  el.hidden = false;
+  toastTimer = /** @type {number} */ (
+    setTimeout(() => {
+      el.hidden = true;
+    }, 2200)
+  );
 }
 
 /**
