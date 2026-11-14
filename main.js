@@ -115,6 +115,7 @@ function availableBadge(profile) {
   return badge;
 }
 
+let toastTimer = 0;
 /**
  * Single-slot toast: every message replaces the previous one and resets its
  * timeout, so rapid clicks never stack or race. Screen-reader friendly via
@@ -123,7 +124,6 @@ function availableBadge(profile) {
  * @param {"ok" | "error"} [kind]
  * @returns {void}
  */
-let toastTimer = 0;
 function toast(message, kind = "ok") {
   const el = byId("toast");
   clearTimeout(toastTimer);
