@@ -231,21 +231,22 @@ function render(site) {
   );
 
   // ----- Share: native share sheet on mobile, copy to clipboard on desktop -----
-  const shareBtn = byId("share");
-  byId("share").querySelector(".share-icon").innerHTML = icon("share", 16);
+  const shareBtn = /** @type {HTMLButtonElement} */ (byId("share"));
+  const shareIcon = /** @type {HTMLElement} */ (shareBtn.querySelector(".share-icon"));
+  const shareLabel = /** @type {HTMLElement} */ (shareBtn.querySelector(".share-label"));
+  shareIcon.innerHTML = icon("share", 16);
   shareBtn.hidden = false;
   shareBtn.addEventListener("click", async () => {
     const url = location.origin + location.pathname;
-    const label = shareBtn.querySelector(".share-label");
     /** Confirms the copy: "Copied!" with a green check, then back to normal. */
     const confirm = () => {
       shareBtn.classList.add("done");
-      shareBtn.querySelector(".share-icon").innerHTML = icon("check", 16);
-      label.textContent = "Copied!";
+      shareIcon.innerHTML = icon("check", 16);
+      shareLabel.textContent = "Copied!";
       setTimeout(() => {
         shareBtn.classList.remove("done");
-        shareBtn.querySelector(".share-icon").innerHTML = icon("share", 16);
-        label.textContent = "Share site";
+        shareIcon.innerHTML = icon("share", 16);
+        shareLabel.textContent = "Share site";
       }, 2000);
     };
     try {
