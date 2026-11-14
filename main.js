@@ -254,6 +254,30 @@ function render(site) {
         return a;
       }),
   );
+
+  // ----- Share button: native share sheet on mobile, copy to clipboard on desktop -----
+  const shareBtn = byId("share");
+  shareBtn.innerHTML = icon("share", 16);
+  shareBtn.hidden = false;
+  shareBtn.addEventListener("click", async () => {
+    const url = location.origin + location.pathname;
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: document.title, url });
+      } else {
+        await navigator.clipboard.writeText(url);
+        toast("Link copied to clipboard");
+      }
+    } catch (err) {
+      if (err instanceof Error && err.name === "AbortError") return; // user closed the sheet
+      try {
+        await navigator.clipboard.writeText(url);
+        toast("Link copied to clipboard");
+      } catch {
+        toast("Couldn't share or copy", "error");
+      }
+    }
+  });
 }
 
 // ----- Theme toggle: a small web component -----

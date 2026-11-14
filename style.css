@@ -382,6 +382,35 @@ hr {
   border-radius: var(--radius);
 }
 
+/* ---------- Footer (outside the card) ---------- */
+footer {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+/* Inline share button: native sheet on mobile, clipboard elsewhere */
+.share {
+  display: inline-grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  margin-left: 0.35rem;
+  vertical-align: middle;
+  background: none;
+  border: 0;
+  border-radius: 50%;
+  color: var(--muted);
+  cursor: pointer;
+  transition:
+    color var(--speed) ease,
+    background var(--speed) ease;
+}
+.share:hover {
+  color: var(--fg);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
 /* ---------- Toast (single slot, above the footer) ---------- */
 #toast {
   position: fixed;
