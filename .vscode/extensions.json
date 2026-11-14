@@ -1,4 +1,3 @@
 {
-  "recommendations": ["ms-vscode.vscode-typescript-next"],
-  "unwantedRecommendations": []
+  "recommendations": ["biomejs.biome"]
 }

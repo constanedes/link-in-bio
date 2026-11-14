@@ -9,5 +9,5 @@
     "checkJs": true,
     "allowJs": true
   },
-  "include": ["*.js"]
+  "include": ["public/**/*.js"]
 }
