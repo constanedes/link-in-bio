@@ -127,7 +127,7 @@ main {
   background: var(--bg);
   border-radius: calc(var(--radius) + 0.25rem);
   outline: 2px solid var(--accent);
-  outline-offset: 3px; /* accent ring: the small detail */
+  outline-offset: 0px; /* accent ring: the small detail */
   font-weight: 700;
   font-size: 1.25rem;
   letter-spacing: 0.04em;
@@ -158,6 +158,20 @@ h1 {
   color: var(--muted);
 }
 
+/* Small screens: tighter header so the name fits on one line */
+@media (max-width: 40rem) {
+  .avatar {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+  .avatar-wrap.open::after {
+    inset: -5px;
+  }
+  .profile {
+    gap: 1rem;
+  }
+}
+
 /* Reserve the toggle's spot before JS upgrades it (avoids a header shift) */
 theme-toggle {
   display: block;
@@ -173,9 +187,9 @@ theme-toggle {
 .avatar-wrap.open::after {
   content: "";
   position: absolute;
-  inset: -7px;
+  inset: -6px;
   border: 2px solid light-dark(#16a34a, #4ade80);
-  border-radius: calc(var(--radius) + 0.5rem);
+  border-radius: calc(var(--radius) + 0.35rem);
   animation: ring-pulse 2s ease-in-out infinite;
   pointer-events: none;
 }
@@ -191,8 +205,8 @@ theme-toggle {
 /* Corner presence dot; its tooltip opens on hover, tap and keyboard focus */
 .presence {
   position: absolute;
-  right: -0.25rem;
-  bottom: -0.25rem;
+  right: -0.85rem;
+  bottom: -0.85rem;
   width: 1.1rem;
   height: 1.1rem;
   background: light-dark(#16a34a, #4ade80);
@@ -222,6 +236,16 @@ theme-toggle {
 .presence:focus::after {
   opacity: 1;
   visibility: visible;
+}
+/* Small screens: the tooltip would overflow the viewport to the left, so it opens to the right */
+@media (max-width: 40rem) {
+  .presence::after {
+    top: 50%;
+    left: calc(100% + 0.6rem);
+    right: auto;
+    translate: 0 -50%;
+    max-width: 11rem;
+  }
 }
 
 /* ---------- Tiles (icon squares shared by buttons, socials and the toggle) ---------- */
@@ -325,8 +349,7 @@ theme-toggle {
   justify-content: space-between;
   gap: 1rem;
   width: 100%;
-  min-height: 2.5rem;
-  padding: 0 0.75rem;
+  padding: 0;
   background: none;
   border: 0;
   border-radius: var(--radius);
@@ -343,10 +366,31 @@ theme-toggle {
 .link-toggle[aria-expanded="true"] .chev {
   rotate: 180deg;
 }
+/* Drop animation: height + fade; visibility keeps it keyboard-inert when closed */
 .link-actions {
   display: grid;
   gap: 0.5rem;
+  margin-top: 0;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  visibility: hidden;
+  transition:
+    max-height var(--speed) ease,
+    margin-top var(--speed) ease,
+    opacity var(--speed) ease,
+    visibility 0s linear var(--speed);
+}
+.link.expandable.expanded .link-actions {
   margin-top: 0.5rem;
+  max-height: 10rem;
+  opacity: 1;
+  visibility: visible;
+  transition:
+    max-height var(--speed) ease,
+    margin-top var(--speed) ease,
+    opacity var(--speed) ease,
+    visibility 0s;
 }
 .sub-action {
   display: flex;
@@ -396,29 +440,37 @@ footer {
   font-size: 0.875rem;
   color: var(--muted);
 }
-/* Inline share button: native sheet on mobile, clipboard elsewhere */
-.share {
-  display: inline-grid;
-  place-items: center;
-  width: 1.6rem;
-  height: 1.6rem;
-  margin-left: 0.35rem;
-  vertical-align: middle;
+/* Footer "Share site" pill under the copyright */
+.share-site {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+  padding: 0.4rem 0.9rem;
   background: none;
-  border: 0;
-  border-radius: 50%;
+  border: 1px solid var(--line);
+  border-radius: 999px;
   color: var(--muted);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
   cursor: pointer;
   transition:
     color var(--speed) ease,
+    border-color var(--speed) ease,
     background var(--speed) ease;
 }
-.share:hover {
+.share-site:hover {
   color: var(--fg);
-  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
 }
-.share.done {
+.share-site .share-icon {
+  display: grid;
+  place-items: center;
+}
+.share-site.done {
   color: light-dark(#16a34a, #4ade80);
+  border-color: light-dark(#16a34a, #4ade80);
 }
 
 /* ---------- Background: perspective grid ---------- */

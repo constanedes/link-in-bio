@@ -77,7 +77,6 @@ function expandableEmail(link) {
   const actions = document.createElement("div");
   actions.className = "link-actions";
   actions.id = "email-actions";
-  actions.hidden = true;
 
   const open = document.createElement("a");
   open.href = link.url;
@@ -106,16 +105,14 @@ function expandableEmail(link) {
 
   actions.append(open, copyBtn);
   toggle.addEventListener("click", () => {
-    const openNow = actions.hidden;
-    actions.hidden = !openNow;
-    toggle.setAttribute("aria-expanded", String(openNow));
+    const openNow = !wrap.classList.contains("expanded");
     wrap.classList.toggle("expanded", openNow);
+    toggle.setAttribute("aria-expanded", String(openNow));
   });
   document.addEventListener("click", (e) => {
-    if (!actions.hidden && e.target instanceof Node && !wrap.contains(e.target)) {
-      actions.hidden = true;
-      toggle.setAttribute("aria-expanded", "false");
+    if (wrap.classList.contains("expanded") && e.target instanceof Node && !wrap.contains(e.target)) {
       wrap.classList.remove("expanded");
+      toggle.setAttribute("aria-expanded", "false");
     }
   });
 
@@ -233,19 +230,22 @@ function render(site) {
       }),
   );
 
-  // ----- Share button: native share sheet on mobile, copy to clipboard on desktop -----
+  // ----- Share: native share sheet on mobile, copy to clipboard on desktop -----
   const shareBtn = byId("share");
-  shareBtn.innerHTML = icon("share", 16);
+  byId("share").querySelector(".share-icon").innerHTML = icon("share", 16);
   shareBtn.hidden = false;
   shareBtn.addEventListener("click", async () => {
     const url = location.origin + location.pathname;
-    /** Swaps the icon for a green check for a moment, then back. */
+    const label = shareBtn.querySelector(".share-label");
+    /** Confirms the copy: "Copied!" with a green check, then back to normal. */
     const confirm = () => {
-      shareBtn.innerHTML = icon("check", 16);
       shareBtn.classList.add("done");
+      shareBtn.querySelector(".share-icon").innerHTML = icon("check", 16);
+      label.textContent = "Copied!";
       setTimeout(() => {
-        shareBtn.innerHTML = icon("share", 16);
         shareBtn.classList.remove("done");
+        shareBtn.querySelector(".share-icon").innerHTML = icon("share", 16);
+        label.textContent = "Share site";
       }, 2000);
     };
     try {
