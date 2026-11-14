@@ -314,127 +314,54 @@ theme-toggle {
   margin-right: 0.15rem;
 }
 
-/* ---------- Email split button: open mail client | copy address ---------- */
-.link.split {
+/* ---------- Expandable email: toggle reveals open-client / copy actions ---------- */
+.link.expandable {
+  display: block;
   padding: 0.5rem;
 }
-.split-main {
+.link-toggle {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
   flex: 1;
   min-height: 2.5rem;
-  padding: 0 0.75rem 0 0.75rem;
+  padding: 0 0.75rem;
+  background: none;
+  border: 0;
   border-radius: var(--radius);
+  color: inherit;
+  font: inherit;
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
 }
-.split .copy-btn {
-  background: transparent;
-  border: 1px solid var(--line);
-  width: 2.5rem;
-  height: 2.5rem;
-  flex: none;
-}
-.split .copy-btn:hover {
-  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
-}
-.split .copy-btn.copied {
-  color: light-dark(#166534, #4ade80);
-}
-
-/* ---------- Email split button: open mail client | copy address ---------- */
-.link.split {
-  padding: 0.5rem;
-}
-.split-main {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex: 1;
-  min-height: 2.5rem;
-  padding: 0 0.75rem 0 0.75rem;
-  border-radius: var(--radius);
-}
-.split .copy-btn {
-  background: transparent;
-  border: 1px solid var(--line);
-  width: 2.5rem;
-  height: 2.5rem;
-  flex: none;
-}
-.split .copy-btn:hover {
-  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
-}
-.split .copy-btn.copied {
-  color: light-dark(#166534, #4ade80);
-}
-
-/* ---------- "Open to work" badge ---------- */
-.available {
-  display: flex;
-  align-items: center;
+.link-actions {
+  display: grid;
   gap: 0.5rem;
-  margin-top: 1.25rem;
-  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+.sub-action {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 2.75rem;
+  padding: 0 0.9rem;
+  background: color-mix(in srgb, var(--brand, var(--surface)) 80%, #fff 20%);
+  color: var(--text, var(--fg));
+  border: 1px solid light-dark(rgb(24 24 27 / 0.12), rgb(255 255 255 / 0.14));
+  border-radius: var(--radius);
+  font-size: 0.9375rem;
   font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+}
+.sub-action:hover {
+  filter: brightness(1.03);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+}
+.sub-action.done {
   color: light-dark(#166534, #4ade80);
-}
-.available .dot {
-  width: 0.5rem;
-  height: 0.5rem;
-  flex: none;
-  background: currentcolor;
-  border-radius: 50%;
-  animation: pulse 2s ease-in-out infinite;
-}
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.35;
-  }
-}
-/* Label with a "?" tooltip: works on hover, keyboard focus and tap */
-.available-label {
-  position: relative;
-  cursor: help;
-}
-.available-label::after {
-  content: "?";
-  display: inline-grid;
-  place-items: center;
-  width: 1rem;
-  height: 1rem;
-  margin-left: 0.25rem;
-  border: 1px solid currentcolor;
-  border-radius: 50%;
-  font-size: 0.65rem;
-  vertical-align: middle;
-}
-.available-label::before {
-  content: attr(aria-label);
-  position: absolute;
-  bottom: calc(100% + 0.5rem);
-  left: 50%;
-  translate: -50% 0;
-  width: max-content;
-  max-width: 16rem;
-  padding: 0.4rem 0.6rem;
-  background: light-dark(#18181b, #fff);
-  color: light-dark(#fff, #18181b);
-  border-radius: 0.5rem;
-  font-size: 0.75rem;
-  font-weight: 400;
-  line-height: 1.4;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity var(--speed) ease;
-}
-.available-label:hover::before,
-.available-label:focus::before {
-  opacity: 1;
-  visibility: visible;
 }
 
 /* ---------- Socials ---------- */
@@ -453,24 +380,6 @@ hr {
   width: 2.75rem;
   height: 2.75rem;
   border-radius: var(--radius);
-}
-
-/* ---------- Reduced motion: transitions off, states still visible ---------- */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
-  }
-}
-
-/* ---------- Footer (outside the card) ---------- */
-footer {
-  margin-top: 1.5rem;
-  text-align: center;
-  font-size: 0.875rem;
-  color: var(--muted);
 }
 
 /* ---------- Toast (single slot, above the footer) ---------- */

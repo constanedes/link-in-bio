@@ -50,45 +50,76 @@ function iconTile(name) {
 }
 
 /**
- * Email button split in two: the label opens the mail client, the trailing
- * button copies the address to the clipboard. Copy feedback swaps the icon
- * for a check and announces itself to screen readers.
+ * Email button that expands into two sub-buttons: open the mail client or
+ * copy the address. `expanded` is a CSS class; clicking outside collapses it.
  * @param {Link} link
  * @returns {HTMLDivElement}
  */
-function splitEmail(link) {
+function expandableEmail(link) {
   const wrap = document.createElement("div");
-  wrap.className = "link split";
+  wrap.className = "link expandable";
   if (link.color) wrap.style.setProperty("--brand", link.color);
   if (link.text) wrap.style.setProperty("--text", link.text);
 
-  const open = anchor(link, "split-main");
-  open.append(iconTile(link.icon));
+  const address = link.url.replace(/^mailto:/, "");
+  const toggle = document.createElement("button");
+  toggle.type = "button";
+  toggle.className = "link-toggle";
+  toggle.setAttribute("aria-expanded", "false");
+  toggle.setAttribute("aria-controls", "email-actions");
+
+  const label = document.createElement("span");
+  label.textContent = link.label;
+  toggle.append(iconTile(link.icon), label);
+
+  const actions = document.createElement("div");
+  actions.className = "link-actions";
+  actions.id = "email-actions";
+  actions.hidden = true;
+
+  const open = document.createElement("a");
+  open.href = link.url;
+  open.className = "sub-action";
+  open.innerHTML = `${icon("mail", 18)}<span>Open email client</span>`;
+  open.setAttribute("aria-label", `Open email client for ${address}`);
 
   const copyBtn = document.createElement("button");
   copyBtn.type = "button";
-  copyBtn.className = "tile copy-btn";
-  copyBtn.setAttribute("aria-label", `Copy ${link.label} address`);
-  copyBtn.innerHTML = icon("copy");
-  const address = link.url.replace(/^mailto:/, "");
+  copyBtn.className = "sub-action";
+  copyBtn.innerHTML = `${icon("copy", 18)}<span>Copy email address</span>`;
+  copyBtn.setAttribute("aria-label", `Copy ${address} to clipboard`);
   copyBtn.addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(address);
-      copyBtn.innerHTML = icon("check");
-      copyBtn.classList.add("copied");
-      copyBtn.setAttribute("aria-label", "Copied");
+      copyBtn.innerHTML = `${icon("check", 18)}<span>Copied!</span>`;
+      copyBtn.classList.add("done");
       toast("Email copied to clipboard");
       setTimeout(() => {
-        copyBtn.innerHTML = icon("copy");
-        copyBtn.classList.remove("copied");
-        copyBtn.setAttribute("aria-label", `Copy ${link.label} address`);
+        copyBtn.innerHTML = `${icon("copy", 18)}<span>Copy email address</span>`;
+        copyBtn.classList.remove("done");
       }, 2000);
     } catch {
       toast("Couldn't copy — clipboard blocked", "error");
     }
   });
 
-  wrap.append(open, copyBtn);
+  actions.append(open, copyBtn);
+
+  toggle.addEventListener("click", () => {
+    const openNow = actions.hidden;
+    actions.hidden = !openNow;
+    toggle.setAttribute("aria-expanded", String(openNow));
+    wrap.classList.toggle("expanded", openNow);
+  });
+  document.addEventListener("click", (e) => {
+    if (!actions.hidden && e.target instanceof Node && !wrap.contains(e.target)) {
+      actions.hidden = true;
+      toggle.setAttribute("aria-expanded", "false");
+      wrap.classList.remove("expanded");
+    }
+  });
+
+  wrap.append(toggle, actions);
   return wrap;
 }
 
@@ -198,7 +229,7 @@ function render(site) {
     ...links
       .filter((l) => l.visible !== false)
       .map((l) => {
-        if (l.copy) return splitEmail(l);
+        if (l.copy) return expandableEmail(l);
         const a = anchor(l, "link");
         if (l.download) a.setAttribute("download", "");
         else if (/^https?:/.test(l.url)) {
