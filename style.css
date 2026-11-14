@@ -225,6 +225,15 @@ theme-toggle {
   border-color: transparent;
   filter: brightness(1.08);
 }
+/* Inverted button (404 "Back to home"): maximum contrast in either theme */
+.link.contrast {
+  background: light-dark(#18181b, #fff);
+  color: light-dark(#fff, #18181b);
+}
+.link.contrast:hover {
+  border-color: transparent;
+  box-shadow: 0 6px 16px light-dark(rgb(0 0 0 / 0.25), rgb(255 255 255 / 0.25));
+}
 
 /* ---------- Socials ---------- */
 hr {

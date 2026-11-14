@@ -17,7 +17,6 @@
   <div class="bg" id="bg" aria-hidden="true"></div>
   <main>
     <header class="profile">
-      <div class="avatar" id="avatar" aria-hidden="true">CE</div>
       <div class="who">
         <h1>404</h1>
         <p class="role">Page not found</p>
@@ -27,16 +26,12 @@
 
     <p class="bio">This page doesn't exist or was moved.</p>
     <nav id="links" aria-label="Links">
-      <a class="link" id="home" href="/">
+      <a class="link contrast" id="home" href="/">
         <span>Back to home</span>
         <span class="tile" aria-hidden="true" data-icon="home"></span>
       </a>
     </nav>
   </main>
-
-  <footer>
-    <p>© <span id="year">2026</span> Constantino Edes</p>
-  </footer>
 
   <script type="module">
     import { drawBackground } from "/bg.js";
@@ -47,7 +42,6 @@
       .then(({ background }) => drawBackground(background))
       .catch(() => drawBackground({ style: "glow", grid: "floor", accent: "", accent2: "" }));
     document.querySelector('#home [data-icon]').innerHTML = icon("home");
-    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
