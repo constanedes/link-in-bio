@@ -235,6 +235,115 @@ theme-toggle {
   box-shadow: 0 6px 16px light-dark(rgb(0 0 0 / 0.25), rgb(255 255 255 / 0.25));
 }
 
+/* ---------- Featured link (between the bio and the buttons) ---------- */
+.featured {
+  margin-top: 1.25rem;
+}
+.link.featured {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 14%, transparent);
+}
+.link.featured:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+/* ---------- Email split button: open mail client | copy address ---------- */
+.link.split {
+  padding: 0.5rem;
+}
+.split-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
+  min-height: 2.5rem;
+  padding: 0 0.75rem 0 0.75rem;
+  border-radius: var(--radius);
+}
+.split .copy-btn {
+  background: transparent;
+  border: 1px solid var(--line);
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: none;
+}
+.split .copy-btn:hover {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+}
+.split .copy-btn.copied {
+  color: light-dark(#166534, #4ade80);
+}
+
+/* ---------- "Open to work" badge ---------- */
+.available {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: light-dark(#166534, #4ade80);
+}
+.available .dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  flex: none;
+  background: currentcolor;
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+/* Label with a "?" tooltip: works on hover, keyboard focus and tap */
+.available-label {
+  position: relative;
+  cursor: help;
+}
+.available-label::after {
+  content: "?";
+  display: inline-grid;
+  place-items: center;
+  width: 1rem;
+  height: 1rem;
+  margin-left: 0.25rem;
+  border: 1px solid currentcolor;
+  border-radius: 50%;
+  font-size: 0.65rem;
+  vertical-align: middle;
+}
+.available-label::before {
+  content: attr(aria-label);
+  position: absolute;
+  bottom: calc(100% + 0.5rem);
+  left: 50%;
+  translate: -50% 0;
+  width: max-content;
+  max-width: 16rem;
+  padding: 0.4rem 0.6rem;
+  background: light-dark(#18181b, #fff);
+  color: light-dark(#fff, #18181b);
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.4;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--speed) ease;
+}
+.available-label:hover::before,
+.available-label:focus::before {
+  opacity: 1;
+  visibility: visible;
+}
+
 /* ---------- Socials ---------- */
 hr {
   margin: 2rem 0 1.5rem;

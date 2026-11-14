@@ -30,6 +30,25 @@
   <link rel="preload" href="fonts/space-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css">
   <script type="module" src="main.js"></script>
+
+  <!-- Structured data: helps search engines show your roles and profiles -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Constantino Edes",
+      "jobTitle": "Software Developer",
+      "url": "https://hi.constantinoedes.dev/",
+      "image": "https://hi.constantinoedes.dev/assets/avatar.jpg",
+      "email": "mailto:hola@constantinoedes.dev",
+      "sameAs": [
+        "https://github.com/constanedes",
+        "https://www.linkedin.com/in/constanedes",
+        "https://x.com/constanedes",
+        "https://dev.to/constanedes"
+      ]
+    }
+  </script>
 </head>
 <body>
   <!-- Decorative perspective grid, drawn by bg.js -->
@@ -47,6 +66,8 @@
     </header>
 
     <p class="bio" id="bio"></p>
+    <div id="available-slot" hidden></div>
+    <div id="featured-slot" class="featured" hidden></div>
     <nav id="links" aria-label="Links"></nav>
     <hr>
     <nav class="socials" id="socials" aria-label="Social networks"></nav>

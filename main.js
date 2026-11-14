@@ -1,11 +1,11 @@
 import { drawBackground } from "./bg.js";
 import { icon } from "./icons.js";
 
-/** @typedef {{ label: string, url: string, icon: string, color?: string, text?: string, download?: boolean, visible?: boolean }} Link */
+/** @typedef {{ label: string, url: string, icon: string, color?: string, text?: string, download?: boolean, visible?: boolean, featured?: boolean, copy?: boolean }} Link */
 
 /** @typedef {{ label: string, url: string, icon: string, visible?: boolean }} Social */
 
-/** @typedef {{ initials: string, avatar: string, avatarAlt: string, name: string, role: string, bio: string }} Profile */
+/** @typedef {{ initials: string, avatar: string, avatarAlt: string, name: string, role: string, bio: string, available?: boolean, availableLabel?: string }} Profile */
 
 /**
  * Page background configuration.
@@ -47,6 +47,71 @@ function iconTile(name) {
   span.innerHTML = icon(name);
   span.setAttribute("aria-hidden", "true");
   return span;
+}
+
+/**
+ * Email button split in two: the label opens the mail client, the trailing
+ * button copies the address to the clipboard. Copy feedback swaps the icon
+ * for a check and announces itself to screen readers.
+ * @param {Link} link
+ * @returns {HTMLDivElement}
+ */
+function splitEmail(link) {
+  const wrap = document.createElement("div");
+  wrap.className = "link split";
+  if (link.color) wrap.style.setProperty("--brand", link.color);
+  if (link.text) wrap.style.setProperty("--text", link.text);
+
+  const open = anchor(link, "split-main");
+  open.append(iconTile(link.icon));
+
+  const copyBtn = document.createElement("button");
+  copyBtn.type = "button";
+  copyBtn.className = "tile copy-btn";
+  copyBtn.setAttribute("aria-label", `Copy ${link.label} address`);
+  copyBtn.innerHTML = icon("copy");
+  const address = link.url.replace(/^mailto:/, "");
+  copyBtn.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(address);
+      copyBtn.innerHTML = icon("check");
+      copyBtn.classList.add("copied");
+      copyBtn.setAttribute("aria-label", "Copied");
+      setTimeout(() => {
+        copyBtn.innerHTML = icon("copy");
+        copyBtn.classList.remove("copied");
+        copyBtn.setAttribute("aria-label", `Copy ${link.label} address`);
+      }, 2000);
+    } catch {
+      // Clipboard blocked (e.g. without HTTPS): select nothing, do nothing.
+    }
+  });
+
+  wrap.append(open, copyBtn);
+  return wrap;
+}
+
+/**
+ * "Open to work" badge: pulsing green dot, label, and a "?" that reveals
+ * the same explanation on hover, focus (keyboard) and tap.
+ * @param {Profile} profile
+ * @returns {HTMLElement | null}
+ */
+function availableBadge(profile) {
+  if (!profile.available) return null;
+  const badge = document.createElement("p");
+  badge.className = "available";
+  const dot = document.createElement("span");
+  dot.className = "dot";
+  dot.setAttribute("aria-hidden", "true");
+  const label = document.createElement("span");
+  label.className = "available-label";
+  label.tabIndex = 0;
+  label.textContent = profile.availableLabel || "Open to work";
+  label.setAttribute("role", "note");
+  label.setAttribute("aria-label", `${label.textContent}: open to new opportunities and projects`);
+  badge.append(dot, label);
+  return badge;
 }
 
 /**
@@ -98,22 +163,49 @@ function render(site) {
   byId("role").textContent = profile.role;
   byId("bio").textContent = profile.bio;
 
-  // ----- Main link buttons (the whole button is the link) -----
-  byId("links").append(
-    ...links
-      .filter((l) => l.visible !== false)
-      .map((l) => {
-        const a = anchor(l, "link");
-        if (l.download) a.setAttribute("download", "");
-        else if (/^https?:/.test(l.url)) {
+  // ----- "Open to work" badge (hidden in the markup until the JSON enables it) -----
+  const badge = availableBadge(profile);
+  if (badge) {
+    const slot = byId("available-slot");
+    slot.hidden = false;
+    slot.replaceChildren(badge);
+  }
+
+  // ----- Featured link (above the buttons), then the regular buttons -----
+  const showable = links.filter((l) => l.visible !== false);
+  const featured = showable.filter((l) => l.featured);
+  const regular = showable.filter((l) => !l.featured);
+  const featuredSlot = byId("featured-slot");
+  if (featured.length > 0) {
+    featuredSlot.hidden = false;
+    featuredSlot.append(
+      ...featured.map((l) => {
+        const a = anchor(l, "link featured");
+        if (/^https?:/.test(l.url)) {
           a.target = "_blank";
           a.rel = "noopener noreferrer";
         }
-        if (l.color) a.style.setProperty("--brand", l.color);
-        if (l.text) a.style.setProperty("--text", l.text);
         a.append(iconTile(l.icon));
         return a;
       }),
+    );
+  }
+
+  // ----- Main link buttons (the whole button is the link; email can be split) -----
+  byId("links").append(
+    ...regular.map((l) => {
+      if (l.copy) return splitEmail(l);
+      const a = anchor(l, "link");
+      if (l.download) a.setAttribute("download", "");
+      else if (/^https?:/.test(l.url)) {
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+      }
+      if (l.color) a.style.setProperty("--brand", l.color);
+      if (l.text) a.style.setProperty("--text", l.text);
+      a.append(iconTile(l.icon));
+      return a;
+    }),
   );
 
   // ----- Social icon row -----

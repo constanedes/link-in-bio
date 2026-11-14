@@ -5,7 +5,9 @@
     "avatarAlt": "Foto de Constantino Edes",
     "name": "Constantino Edes",
     "role": "Software Developer",
-    "bio": "Backend developer focused on .NET, DevOps and data. Find my work, CV and contact below."
+    "bio": "Backend developer focused on .NET, DevOps and data. Find my work, CV and contact below.",
+    "available": true,
+    "availableLabel": "Open to work"
   },
   "links": [
     {
@@ -14,7 +16,8 @@
       "icon": "globe",
       "color": "#dbeafe",
       "text": "#1e40af",
-      "visible": true
+      "visible": true,
+      "featured": true
     },
     { "label": "CV", "url": "assets/cv.pdf", "icon": "file", "color": "#ffedd5", "text": "#9a3412", "visible": true },
     {
@@ -39,7 +42,8 @@
       "icon": "mail",
       "color": "#fee2e2",
       "text": "#991b1b",
-      "visible": true
+      "visible": true,
+      "copy": true
     },
     {
       "label": "Save contact",
