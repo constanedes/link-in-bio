@@ -150,37 +150,6 @@ function renderPresence(profile) {
 }
 
 /**
- * Builds the vCard from the site JSON (single source of truth) and saves it
- * as a .vcf download.
- * @param {SiteData} site
- * @returns {void}
- */
-function downloadVCard(site) {
-  const { profile, links } = site;
-  const emailLink = links.find((l) => l.url.startsWith("mailto:"));
-  const email = emailLink ? emailLink.url.replace(/^mailto:/, "") : "";
-  const [first = "", ...rest] = profile.name.split(" ");
-  const last = rest.pop() ?? "";
-  const card = [
-    "BEGIN:VCARD",
-    "VERSION:3.0",
-    `N:${last};${first};;;`,
-    `FN:${profile.name}`,
-    `TITLE:${profile.role}`,
-    ...(profile.org ? [`ORG:${profile.org}`] : []),
-    `EMAIL;TYPE=INTERNET:${email}`,
-    `TEL;TYPE=CELL,VOICE:${profile.phone ?? ""}`,
-    `URL:${profile.url ?? location.origin}`,
-    "END:VCARD",
-  ].join("\r\n");
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(new Blob([card], { type: "text/vcard" }));
-  a.download = "constantino-edes.vcf";
-  a.click();
-  URL.revokeObjectURL(a.href);
-}
-
-/**
  * Element by id; the markup guarantees it exists.
  * @param {string} id
  * @returns {HTMLElement}
@@ -252,11 +221,9 @@ function render(site) {
         if (l.copy) return expandableEmail(l);
         const a = anchor(l, "link");
         if (l.download) {
-          a.href = "#";
-          a.addEventListener("click", (e) => {
-            e.preventDefault();
-            downloadVCard(site);
-          });
+          // Native behavior: mobiles (coarse pointer) open the vCard in
+          // Contacts; on desktop force a file download instead of a page view.
+          if (!matchMedia("(pointer: coarse)").matches) a.setAttribute("download", "");
         } else if (/^https?:/.test(l.url)) {
           a.target = "_blank";
           a.rel = "noopener noreferrer";

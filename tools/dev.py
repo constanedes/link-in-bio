@@ -9,6 +9,7 @@ mtime fingerprint; no SSE, no websockets, nothing to break).
 
 import http.server
 import pathlib
+import subprocess
 import sys
 import threading
 import time
@@ -103,6 +104,11 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
 
 def main():
+    # Regenerate the vCard (build artifact) so "Save contact" works in dev too
+    try:
+        subprocess.run(["node", "tools/vcf.mjs"], check=True, cwd=ROOT)
+    except (OSError, subprocess.CalledProcessError) as err:
+        print(f"[dev] vcf generation skipped ({err})")
     threading.Thread(target=watcher, daemon=True).start()
     url = f"http://localhost:{PORT}/"
     print(f"  link-in-bio dev server → {url}  (Ctrl+C to stop)")
