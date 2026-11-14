@@ -165,7 +165,7 @@ h1 {
     height: 4.5rem;
   }
   .avatar-wrap.open::after {
-    inset: -5px;
+    inset: -3px;
   }
   .profile {
     gap: 1rem;
@@ -182,14 +182,15 @@ theme-toggle {
 
 /* "Open to work": pulsing green ring replaces the static accent outline */
 .avatar-wrap.open .avatar {
-  outline: none;
+  outline: 3px solid light-dark(#16a34a, #4ade80);
+  outline-offset: 0;
 }
 .avatar-wrap.open::after {
   content: "";
   position: absolute;
-  inset: -6px;
-  border: 2px solid light-dark(#16a34a, #4ade80);
-  border-radius: calc(var(--radius) + 0.35rem);
+  inset: -3px;
+  border: 3px solid light-dark(#16a34a, #4ade80);
+  border-radius: calc(var(--radius) + 0.25rem);
   animation: ring-pulse 2s ease-in-out infinite;
   pointer-events: none;
 }
@@ -205,12 +206,13 @@ theme-toggle {
 /* Corner presence dot; its tooltip opens on hover, tap and keyboard focus */
 .presence {
   position: absolute;
-  right: -0.85rem;
-  bottom: -0.85rem;
-  width: 1.1rem;
-  height: 1.1rem;
+  right: 0;
+  bottom: 0;
+  translate: 35% 35%;
+  width: 1.15rem;
+  height: 1.15rem;
   background: light-dark(#16a34a, #4ade80);
-  border: 2px solid var(--bg);
+  border: 2px solid var(--surface);
   border-radius: 50%;
   cursor: help;
 }
