@@ -95,18 +95,16 @@ function expandableEmail(link) {
       await navigator.clipboard.writeText(address);
       copyBtn.innerHTML = `${icon("check", 18)}<span>Copied!</span>`;
       copyBtn.classList.add("done");
-      toast("Email copied to clipboard");
       setTimeout(() => {
         copyBtn.innerHTML = `${icon("copy", 18)}<span>Copy email address</span>`;
         copyBtn.classList.remove("done");
       }, 2000);
     } catch {
-      toast("Couldn't copy — clipboard blocked", "error");
+      /* clipboard blocked (e.g. without HTTPS): keep the button as is */
     }
   });
 
   actions.append(open, copyBtn);
-
   toggle.addEventListener("click", () => {
     const openNow = actions.hidden;
     actions.hidden = !openNow;
@@ -139,28 +137,6 @@ function renderPresence(profile) {
   dot.hidden = false;
   dot.setAttribute("role", "note");
   dot.setAttribute("aria-label", "Open to new opportunities and projects");
-}
-
-let toastTimer = 0;
-/**
- * Single-slot toast: every message replaces the previous one and resets its
- * timeout, so rapid clicks never stack or race. Screen-reader friendly via
- * the aria-live container in the markup.
- * @param {string} message
- * @param {"ok" | "error"} [kind]
- * @returns {void}
- */
-function toast(message, kind = "ok") {
-  const el = byId("toast");
-  clearTimeout(toastTimer);
-  el.className = kind;
-  el.textContent = message;
-  el.hidden = false;
-  toastTimer = /** @type {number} */ (
-    setTimeout(() => {
-      el.hidden = true;
-    }, 2200)
-  );
 }
 
 /**
@@ -263,20 +239,29 @@ function render(site) {
   shareBtn.hidden = false;
   shareBtn.addEventListener("click", async () => {
     const url = location.origin + location.pathname;
+    /** Swaps the icon for a green check for a moment, then back. */
+    const confirm = () => {
+      shareBtn.innerHTML = icon("check", 16);
+      shareBtn.classList.add("done");
+      setTimeout(() => {
+        shareBtn.innerHTML = icon("share", 16);
+        shareBtn.classList.remove("done");
+      }, 2000);
+    };
     try {
       if (navigator.share) {
         await navigator.share({ title: document.title, url });
       } else {
         await navigator.clipboard.writeText(url);
-        toast("Link copied to clipboard");
+        confirm();
       }
     } catch (err) {
       if (err instanceof Error && err.name === "AbortError") return; // user closed the sheet
       try {
         await navigator.clipboard.writeText(url);
-        toast("Link copied to clipboard");
+        confirm();
       } catch {
-        toast("Couldn't share or copy", "error");
+        /* share unavailable and clipboard blocked: stay quiet */
       }
     }
   });
