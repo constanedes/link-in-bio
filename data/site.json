@@ -6,13 +6,13 @@
     "name": "Constantino Edes",
     "role": "Software Developer",
     "bio": "Backend developer focused on C# and TypeScript. Currently learning networking and DevOps concepts — also interested in data analysis and engineering, and in embedded systems/microcontrollers.\nFind my work, CV and contact below.",
-    "available": true,
-    "availableLabel": "Open to work"
+    "phone": "+5493415757557",
+    "available": true
   },
   "highlight": {
     "text": "Check out my latest project!",
     "url": "https://constantinoedes.dev",
-    "visible": false
+    "visible": true
   },
   "links": [
     {

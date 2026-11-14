@@ -5,7 +5,7 @@ import { icon } from "./icons.js";
 
 /** @typedef {{ label: string, url: string, icon: string, visible?: boolean }} Social */
 
-/** @typedef {{ initials: string, avatar: string, avatarAlt: string, name: string, role: string, bio: string, available?: boolean, availableLabel?: string }} Profile */
+/** @typedef {{ initials: string, avatar: string, avatarAlt: string, name: string, role: string, bio: string, phone?: string, available?: boolean }} Profile */
 
 /**
  * Page background configuration.
@@ -137,6 +137,36 @@ function renderPresence(profile) {
 }
 
 /**
+ * Builds the vCard from the site JSON (single source of truth) and saves it
+ * as a .vcf download.
+ * @param {SiteData} site
+ * @returns {void}
+ */
+function downloadVCard(site) {
+  const { profile, links } = site;
+  const emailLink = links.find((l) => l.url.startsWith("mailto:"));
+  const email = emailLink ? emailLink.url.replace(/^mailto:/, "") : "";
+  const [first = "", ...rest] = profile.name.split(" ");
+  const last = rest.pop() ?? "";
+  const card = [
+    "BEGIN:VCARD",
+    "VERSION:3.0",
+    `N:${last};${first};;;`,
+    `FN:${profile.name}`,
+    `TITLE:${profile.role}`,
+    `EMAIL;TYPE=INTERNET:${email}`,
+    `TEL;TYPE=CELL,VOICE:${profile.phone ?? ""}`,
+    `URL:${location.origin}`,
+    "END:VCARD",
+  ].join("\r\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([card], { type: "text/vcard" }));
+  a.download = "constantino-edes.vcf";
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+/**
  * Element by id; the markup guarantees it exists.
  * @param {string} id
  * @returns {HTMLElement}
@@ -206,8 +236,13 @@ function render(site) {
       .map((l) => {
         if (l.copy) return expandableEmail(l);
         const a = anchor(l, "link");
-        if (l.download) a.setAttribute("download", "");
-        else if (/^https?:/.test(l.url)) {
+        if (l.download) {
+          a.href = "#";
+          a.addEventListener("click", (e) => {
+            e.preventDefault();
+            downloadVCard(site);
+          });
+        } else if (/^https?:/.test(l.url)) {
           a.target = "_blank";
           a.rel = "noopener noreferrer";
         }
