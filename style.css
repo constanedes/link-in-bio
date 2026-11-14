@@ -191,16 +191,17 @@ theme-toggle {
   inset: -3px;
   border: 3px solid light-dark(#16a34a, #4ade80);
   border-radius: calc(var(--radius) + 0.25rem);
-  animation: ring-pulse 2s ease-in-out infinite;
+  animation: ring-fade 3.2s ease-in-out infinite;
   pointer-events: none;
 }
-@keyframes ring-pulse {
+/* The ring breathes: a continuous fade out and back in, never a blink */
+@keyframes ring-fade {
   0%,
   100% {
     opacity: 1;
   }
   50% {
-    opacity: 0.35;
+    opacity: 0;
   }
 }
 /* Corner presence dot; its tooltip opens on hover, tap and keyboard focus */
