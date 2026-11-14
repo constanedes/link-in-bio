@@ -405,6 +405,7 @@ theme-toggle {
   color: var(--text, var(--fg));
   border: 1px solid light-dark(rgb(24 24 27 / 0.12), rgb(255 255 255 / 0.14));
   border-radius: var(--radius);
+  font-family: inherit; /* <button> elements don't inherit the page font by default */
   font-size: 1.125rem;
   font-weight: 600;
   text-decoration: none;
