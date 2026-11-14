@@ -198,7 +198,7 @@ function render(site) {
   const highlightSlot = byId("highlight-slot");
   const hl = site.highlight;
   if (hl && hl.visible !== false && hl.text && hl.url) {
-    const a = anchor(hl, "highlight");
+    const a = anchor({ url: hl.url, label: hl.text }, "highlight");
     a.textContent = hl.text;
     a.innerHTML = `<span class="star" aria-hidden="true">✦</span> ${a.textContent}`;
     highlightSlot.hidden = false;
