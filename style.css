@@ -352,7 +352,7 @@ theme-toggle {
   justify-content: space-between;
   gap: 1rem;
   width: 100%;
-  padding: 0;
+  padding: 0 0 0 0.75rem; /* aligns the label with the other buttons (0.5rem + 0.75rem = 1.25rem) */
   background: none;
   border: 0;
   border-radius: var(--radius);
