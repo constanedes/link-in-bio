@@ -8,7 +8,6 @@ node_modules/
 # Build artifacts / dev server output
 *.log
 public/assets/constantino-edes.vcf
-assets/constantino-edes.vcf
 
 # Local secrets
 .env
