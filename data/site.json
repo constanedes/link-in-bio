@@ -1,4 +1,5 @@
 {
+  "theme": "dark",
   "profile": {
     "initials": "CE",
     "avatar": "assets/avatar.jpg",
@@ -7,6 +8,8 @@
     "role": "Software Developer",
     "bio": "Backend developer focused on C# and TypeScript. Currently learning networking and DevOps concepts — also interested in data analysis and engineering, and in embedded systems/microcontrollers.\nFind my work, CV and contact below.",
     "phone": "+5493415797557",
+    "org": "",
+    "url": "https://constantinoedes.dev",
     "available": true
   },
   "highlight": {
@@ -65,6 +68,13 @@
     { "label": "Luma", "url": "https://lu.ma/constanedes", "icon": "luma", "visible": true },
     { "label": "Discord", "url": "https://discord.gg/constantino", "icon": "discord", "visible": true }
   ],
+  "strings": {
+    "copied": "Copied!",
+    "sendEmail": "Send contact email",
+    "copyEmail": "Copy email address",
+    "share": "Share site",
+    "presence": "Open to new opportunities and projects"
+  },
   "background": {
     "style": "glow",
     "grid": "floor",

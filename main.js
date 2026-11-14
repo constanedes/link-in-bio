@@ -5,7 +5,20 @@ import { icon } from "./icons.js";
 
 /** @typedef {{ label: string, url: string, icon: string, visible?: boolean }} Social */
 
-/** @typedef {{ initials: string, avatar: string, avatarAlt: string, name: string, role: string, bio: string, phone?: string, available?: boolean }} Profile */
+/** @typedef {{ initials: string, avatar: string, avatarAlt: string, name: string, role: string, bio: string, phone?: string, org?: string, url?: string, available?: boolean }} Profile */
+
+/**
+ * UI copy with JSON overridables ("strings" block in site.json).
+ * @type {{ copied: string, sendEmail: string, copyEmail: string, share: string, presence: string }}
+ */
+const DEFAULT_STRINGS = {
+  copied: "Copied!",
+  sendEmail: "Send contact email",
+  copyEmail: "Copy email address",
+  share: "Share site",
+  presence: "Open to new opportunities and projects",
+};
+let STRINGS = DEFAULT_STRINGS;
 
 /**
  * Page background configuration.
@@ -16,7 +29,7 @@ import { icon } from "./icons.js";
  * @typedef {{ style: "glow" | "grid" | "dots" | "none", grid: "floor" | "both", accent: string, accent2: string }} Background
  */
 
-/** @typedef {{ profile: Profile, links: Link[], socials: Social[], background: Background, highlight?: { text: string, url: string, visible?: boolean } }} SiteData */
+/** @typedef {{ profile: Profile, links: Link[], socials: Social[], background: Background, theme?: string, strings?: Partial<typeof DEFAULT_STRINGS>, highlight?: { text: string, url: string, visible?: boolean } }} SiteData */
 
 /**
  * Creates an anchor. External http(s) links open in a new tab safely.
@@ -81,21 +94,21 @@ function expandableEmail(link) {
   const open = document.createElement("a");
   open.href = link.url;
   open.className = "sub-action";
-  open.innerHTML = `${icon("mail", 18)}<span>Send contact email</span>`;
-  open.setAttribute("aria-label", `Send contact email to ${address}`);
+  open.innerHTML = `${icon("mail", 18)}<span>${STRINGS.sendEmail}</span>`;
+  open.setAttribute("aria-label", `${STRINGS.sendEmail} to ${address}`);
 
   const copyBtn = document.createElement("button");
   copyBtn.type = "button";
   copyBtn.className = "sub-action";
-  copyBtn.innerHTML = `${icon("copy", 18)}<span>Copy email address</span>`;
+  copyBtn.innerHTML = `${icon("copy", 18)}<span>${STRINGS.copyEmail}</span>`;
   copyBtn.setAttribute("aria-label", `Copy ${address} to clipboard`);
   copyBtn.addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(address);
-      copyBtn.innerHTML = `${icon("check", 18)}<span>Copied!</span>`;
+      copyBtn.innerHTML = `${icon("check", 18)}<span>${STRINGS.copied}</span>`;
       copyBtn.classList.add("done");
       setTimeout(() => {
-        copyBtn.innerHTML = `${icon("copy", 18)}<span>Copy email address</span>`;
+        copyBtn.innerHTML = `${icon("copy", 18)}<span>${STRINGS.copyEmail}</span>`;
         copyBtn.classList.remove("done");
       }, 2000);
     } catch {
@@ -133,7 +146,7 @@ function renderPresence(profile) {
   const dot = byId("presence");
   dot.hidden = false;
   dot.setAttribute("role", "note");
-  dot.setAttribute("aria-label", "Open to new opportunities and projects");
+  dot.setAttribute("aria-label", STRINGS.presence);
 }
 
 /**
@@ -154,9 +167,10 @@ function downloadVCard(site) {
     `N:${last};${first};;;`,
     `FN:${profile.name}`,
     `TITLE:${profile.role}`,
+    ...(profile.org ? [`ORG:${profile.org}`] : []),
     `EMAIL;TYPE=INTERNET:${email}`,
     `TEL;TYPE=CELL,VOICE:${profile.phone ?? ""}`,
-    `URL:${location.origin}`,
+    `URL:${profile.url ?? location.origin}`,
     "END:VCARD",
   ].join("\r\n");
   const a = document.createElement("a");
@@ -189,6 +203,7 @@ async function loadSite() {
  */
 function render(site) {
   const { profile, links, socials, background } = site;
+  STRINGS = { ...DEFAULT_STRINGS, ...site.strings };
 
   // ----- Background (URL parameters ?bg= and ?grid= override the JSON, handy for previews) -----
   const params = new URLSearchParams(location.search);
@@ -270,6 +285,7 @@ function render(site) {
   const shareIcon = /** @type {HTMLElement} */ (shareBtn.querySelector(".share-icon"));
   const shareLabel = /** @type {HTMLElement} */ (shareBtn.querySelector(".share-label"));
   shareIcon.innerHTML = icon("share", 16);
+  shareLabel.textContent = STRINGS.share;
   shareBtn.hidden = false;
   shareBtn.addEventListener("click", async () => {
     const url = location.origin + location.pathname;
@@ -277,11 +293,11 @@ function render(site) {
     const confirm = () => {
       shareBtn.classList.add("done");
       shareIcon.innerHTML = icon("check", 16);
-      shareLabel.textContent = "Copied!";
+      shareLabel.textContent = STRINGS.copied;
       setTimeout(() => {
         shareBtn.classList.remove("done");
         shareIcon.innerHTML = icon("share", 16);
-        shareLabel.textContent = "Share site";
+        shareLabel.textContent = STRINGS.share;
       }, 2000);
     };
     try {
@@ -338,6 +354,10 @@ customElements.define("theme-toggle", ThemeToggle);
 // ----- Entry point: render when the content arrives, then reveal the card -----
 loadSite()
   .then((site) => {
+    // The JSON can set the initial theme; a visitor's manual choice always wins
+    if (site.theme && !document.documentElement.dataset.theme) {
+      document.documentElement.dataset.theme = site.theme;
+    }
     render(site);
     // Hydration done: reveal the card in its final position (see style.css)
     document.querySelector("main")?.classList.add("ready");
