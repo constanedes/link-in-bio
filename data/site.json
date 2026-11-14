@@ -9,6 +9,11 @@
     "available": true,
     "availableLabel": "Open to work"
   },
+  "highlight": {
+    "text": "Check out my latest project!",
+    "url": "https://constantinoedes.dev",
+    "visible": false
+  },
   "links": [
     {
       "label": "Portfolio",
@@ -16,8 +21,7 @@
       "icon": "globe",
       "color": "#dbeafe",
       "text": "#1e40af",
-      "visible": true,
-      "featured": true
+      "visible": true
     },
     { "label": "CV", "url": "assets/cv.pdf", "icon": "file", "color": "#ffedd5", "text": "#9a3412", "visible": true },
     {

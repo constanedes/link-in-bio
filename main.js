@@ -1,7 +1,7 @@
 import { drawBackground } from "./bg.js";
 import { icon } from "./icons.js";
 
-/** @typedef {{ label: string, url: string, icon: string, color?: string, text?: string, download?: boolean, visible?: boolean, featured?: boolean, copy?: boolean }} Link */
+/** @typedef {{ label: string, url: string, icon: string, color?: string, text?: string, download?: boolean, visible?: boolean, copy?: boolean }} Link */
 
 /** @typedef {{ label: string, url: string, icon: string, visible?: boolean }} Social */
 
@@ -16,7 +16,7 @@ import { icon } from "./icons.js";
  * @typedef {{ style: "glow" | "grid" | "dots" | "none", grid: "floor" | "both", accent: string, accent2: string }} Background
  */
 
-/** @typedef {{ profile: Profile, links: Link[], socials: Social[], background: Background }} SiteData */
+/** @typedef {{ profile: Profile, links: Link[], socials: Social[], background: Background, highlight?: { text: string, url: string, visible?: boolean } }} SiteData */
 
 /**
  * Creates an anchor. External http(s) links open in a new tab safely.
@@ -194,29 +194,21 @@ function render(site) {
     slot.replaceChildren(badge);
   }
 
-  // ----- Featured link (above the buttons), then the regular buttons -----
-  const showable = links.filter((l) => l.visible !== false);
-  const featured = showable.filter((l) => l.featured);
-  const regular = showable.filter((l) => !l.featured);
-  const featuredSlot = byId("featured-slot");
-  if (featured.length > 0) {
-    featuredSlot.hidden = false;
-    featuredSlot.append(
-      ...featured.map((l) => {
-        const a = anchor(l, "link featured");
-        if (/^https?:/.test(l.url)) {
-          a.target = "_blank";
-          a.rel = "noopener noreferrer";
-        }
-        a.append(iconTile(l.icon));
-        return a;
-      }),
-    );
+  // ----- Highlight: a plain, clickable "latest news" line under the bio -----
+  const highlightSlot = byId("highlight-slot");
+  const hl = site.highlight;
+  if (hl && hl.visible !== false && hl.text && hl.url) {
+    const a = anchor(hl, "highlight");
+    a.textContent = hl.text;
+    a.innerHTML = `<span class="star" aria-hidden="true">✦</span> ${a.textContent}`;
+    highlightSlot.hidden = false;
+    highlightSlot.replaceChildren(a);
   }
 
   // ----- Main link buttons (the whole button is the link; email can be split) -----
   byId("links").append(
-    ...regular.map((l) => {
+    ...links
+      .filter((l) => l.visible !== false)
       if (l.copy) return splitEmail(l);
       const a = anchor(l, "link");
       if (l.download) a.setAttribute("download", "");
