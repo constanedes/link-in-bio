@@ -57,7 +57,10 @@
   <main>
     <header class="profile">
       <!-- Profile photo (or initials fallback), filled by main.js -->
-      <div class="avatar" id="avatar" aria-hidden="true"></div>
+      <div class="avatar-wrap" id="avatar-wrap">
+        <div class="avatar" id="avatar" aria-hidden="true"></div>
+        <span class="presence" id="presence" tabindex="0" hidden></span>
+      </div>
       <div class="who">
         <h1 id="name"></h1>
         <p class="role" id="role"></p>
@@ -66,7 +69,6 @@
     </header>
 
     <p class="bio" id="bio"></p>
-    <div id="available-slot" hidden></div>
     <div id="highlight-slot" class="highlight" hidden></div>
     <nav id="links" aria-label="Links"></nav>
     <hr>

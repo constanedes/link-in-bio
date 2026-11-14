@@ -114,12 +114,15 @@ main {
   align-items: center;
   gap: 1.25rem;
 }
-.avatar {
+.avatar-wrap {
+  position: relative;
   flex: none;
+}
+.avatar {
   display: grid;
   place-items: center;
-  width: 4.25rem;
-  height: 4.25rem;
+  width: 5.5rem;
+  height: 5.5rem;
   overflow: hidden;
   background: var(--bg);
   border-radius: calc(var(--radius) + 0.25rem);
@@ -161,6 +164,64 @@ theme-toggle {
   width: 2.5rem;
   height: 2.5rem;
   flex: none;
+}
+
+/* "Open to work": pulsing green ring like a social network online state */
+.avatar-wrap.open .avatar {
+  outline-color: light-dark(#16a34a, #4ade80);
+}
+.avatar-wrap.open::after {
+  content: "";
+  position: absolute;
+  inset: -7px;
+  border: 2px solid light-dark(#16a34a, #4ade80);
+  border-radius: calc(var(--radius) + 0.5rem);
+  animation: ring-pulse 2s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes ring-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+/* Corner presence dot; its tooltip opens on hover, tap and keyboard focus */
+.presence {
+  position: absolute;
+  right: -0.25rem;
+  bottom: -0.25rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  background: light-dark(#16a34a, #4ade80);
+  border: 2px solid var(--bg);
+  border-radius: 50%;
+  cursor: help;
+}
+.presence::after {
+  content: attr(aria-label);
+  position: absolute;
+  right: -0.5rem;
+  bottom: calc(100% + 0.75rem);
+  width: max-content;
+  max-width: 14rem;
+  padding: 0.4rem 0.6rem;
+  background: light-dark(#18181b, #fff);
+  color: light-dark(#fff, #18181b);
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.4;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--speed) ease;
+}
+.presence:hover::after,
+.presence:focus::after {
+  opacity: 1;
+  visibility: visible;
 }
 
 /* ---------- Tiles (icon squares shared by buttons, socials and the toggle) ---------- */
@@ -251,6 +312,33 @@ theme-toggle {
 }
 .highlight .star {
   margin-right: 0.15rem;
+}
+
+/* ---------- Email split button: open mail client | copy address ---------- */
+.link.split {
+  padding: 0.5rem;
+}
+.split-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
+  min-height: 2.5rem;
+  padding: 0 0.75rem 0 0.75rem;
+  border-radius: var(--radius);
+}
+.split .copy-btn {
+  background: transparent;
+  border: 1px solid var(--line);
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: none;
+}
+.split .copy-btn:hover {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+}
+.split .copy-btn.copied {
+  color: light-dark(#166534, #4ade80);
 }
 
 /* ---------- Email split button: open mail client | copy address ---------- */

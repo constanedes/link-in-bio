@@ -93,26 +93,19 @@ function splitEmail(link) {
 }
 
 /**
- * "Open to work" badge: pulsing green dot, label, and a "?" that reveals
- * the same explanation on hover, focus (keyboard) and tap.
+ * "Open to work" presence: the avatar gets a pulsing green ring (like a
+ * social network "online" state) and a corner dot whose tooltip — shown on
+ * hover, tap or keyboard focus — explains the status.
  * @param {Profile} profile
- * @returns {HTMLElement | null}
+ * @returns {void}
  */
-function availableBadge(profile) {
-  if (!profile.available) return null;
-  const badge = document.createElement("p");
-  badge.className = "available";
-  const dot = document.createElement("span");
-  dot.className = "dot";
-  dot.setAttribute("aria-hidden", "true");
-  const label = document.createElement("span");
-  label.className = "available-label";
-  label.tabIndex = 0;
-  label.textContent = profile.availableLabel || "Open to work";
-  label.setAttribute("role", "note");
-  label.setAttribute("aria-label", `${label.textContent}: open to new opportunities and projects`);
-  badge.append(dot, label);
-  return badge;
+function renderPresence(profile) {
+  if (!profile.available) return;
+  byId("avatar-wrap").classList.add("open");
+  const dot = byId("presence");
+  dot.hidden = false;
+  dot.setAttribute("role", "note");
+  dot.setAttribute("aria-label", "Open to new opportunities and projects");
 }
 
 let toastTimer = 0;
@@ -186,13 +179,8 @@ function render(site) {
   byId("role").textContent = profile.role;
   byId("bio").textContent = profile.bio;
 
-  // ----- "Open to work" badge (hidden in the markup until the JSON enables it) -----
-  const badge = availableBadge(profile);
-  if (badge) {
-    const slot = byId("available-slot");
-    slot.hidden = false;
-    slot.replaceChildren(badge);
-  }
+  // ----- "Open to work": green ring + corner dot on the avatar -----
+  renderPresence(profile);
 
   // ----- Highlight: a plain, clickable "latest news" line under the bio -----
   const highlightSlot = byId("highlight-slot");
