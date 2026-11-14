@@ -227,14 +227,14 @@ theme-toggle {
   animation: ring-fade 3.2s ease-in-out infinite;
   pointer-events: none;
 }
-/* The ring breathes: a continuous fade out and back in, never a blink */
+/* The ring breathes gently: it never fully disappears, so it doesn't look like it deforms */
 @keyframes ring-fade {
   0%,
   100% {
     opacity: 1;
   }
   50% {
-    opacity: 0;
+    opacity: 0.35;
   }
 }
 /* Corner presence dot; its tooltip opens on hover, tap and keyboard focus */
@@ -363,8 +363,7 @@ theme-toggle {
 }
 .highlight a {
   color: var(--accent);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  text-decoration: none;
 }
 .highlight .star {
   margin-right: 0.15rem;
