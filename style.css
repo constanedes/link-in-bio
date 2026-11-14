@@ -53,15 +53,17 @@
   }
 }
 
-/* ---------- Base ---------- */
+/* ---------- Reset (cross-browser baseline) ---------- */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
   margin: 0;
+  padding: 0;
 }
 html {
   -webkit-text-size-adjust: 100%;
+  tab-size: 4;
 }
 body {
   min-height: 100dvh;
@@ -72,6 +74,27 @@ body {
   color: var(--fg);
   font: 400 1rem / 1.6 var(--font);
   -webkit-font-smoothing: antialiased;
+}
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+}
+ul,
+ol {
+  list-style: none;
 }
 a {
   color: inherit;
@@ -84,6 +107,15 @@ a {
   outline: 3px solid var(--accent);
   outline-offset: 3px;
   border-radius: 4px;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* ---------- Card ---------- */
