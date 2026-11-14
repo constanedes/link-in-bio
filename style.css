@@ -166,9 +166,9 @@ theme-toggle {
   flex: none;
 }
 
-/* "Open to work": pulsing green ring like a social network online state */
+/* "Open to work": pulsing green ring replaces the static accent outline */
 .avatar-wrap.open .avatar {
-  outline-color: light-dark(#16a34a, #4ade80);
+  outline: none;
 }
 .avatar-wrap.open::after {
   content: "";
@@ -203,8 +203,8 @@ theme-toggle {
 .presence::after {
   content: attr(aria-label);
   position: absolute;
+  top: calc(100% + 0.6rem);
   right: -0.5rem;
-  bottom: calc(100% + 0.75rem);
   width: max-content;
   max-width: 14rem;
   padding: 0.4rem 0.6rem;
@@ -324,7 +324,7 @@ theme-toggle {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  flex: 1;
+  width: 100%;
   min-height: 2.5rem;
   padding: 0 0.75rem;
   background: none;
@@ -334,7 +334,14 @@ theme-toggle {
   font: inherit;
   font-size: 1.125rem;
   font-weight: 600;
+  text-align: left;
   cursor: pointer;
+}
+.link-toggle .chev {
+  transition: rotate var(--speed) ease;
+}
+.link-toggle[aria-expanded="true"] .chev {
+  rotate: 180deg;
 }
 .link-actions {
   display: grid;
@@ -351,8 +358,8 @@ theme-toggle {
   color: var(--text, var(--fg));
   border: 1px solid light-dark(rgb(24 24 27 / 0.12), rgb(255 255 255 / 0.14));
   border-radius: var(--radius);
-  font-size: 0.9375rem;
-  font-weight: 500;
+  font-size: 1.125rem;
+  font-weight: 600;
   text-decoration: none;
   cursor: pointer;
 }

@@ -70,7 +70,9 @@ function expandableEmail(link) {
 
   const label = document.createElement("span");
   label.textContent = link.label;
-  toggle.append(iconTile(link.icon), label);
+  const chevron = iconTile("chevron");
+  chevron.classList.add("chev");
+  toggle.append(label, chevron);
 
   const actions = document.createElement("div");
   actions.className = "link-actions";
