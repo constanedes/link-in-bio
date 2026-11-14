@@ -5,9 +5,9 @@ Thumbs.db
 # Node (only used for optional type-checking)
 node_modules/
 
-# Dev server artifacts
+# Build artifacts / dev server output
 *.log
-dist/
+public/assets/constantino-edes.vcf
 assets/constantino-edes.vcf
 
 # Local secrets

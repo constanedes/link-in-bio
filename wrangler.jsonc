@@ -1,4 +1,4 @@
-// Cloudflare Workers: serves the static site from dist/ (see tools/build.sh)
+// Cloudflare Workers: serves the static site straight from public/
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "link-in-bio",
@@ -6,7 +6,7 @@
   // Required by the Cloudflare Builds preview pipeline (`npx wrangler preview`)
   "previews": {},
   "assets": {
-    "directory": "./dist",
+    "directory": "./public",
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page"
   }

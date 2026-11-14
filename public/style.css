@@ -1,7 +1,7 @@
 /* ---------- Font (self-hosted variable font, weights 300-700) ---------- */
 @font-face {
   font-family: "Space Grotesk";
-  src: url("fonts/space-grotesk-latin-wght-normal.woff2") format("woff2");
+  src: url("assets/fonts/space-grotesk-latin-wght-normal.woff2") format("woff2");
   font-weight: 300 700;
   font-style: normal;
   font-display: block; /* preloaded 22 KB: brief FOIT beats layout shift from swap */

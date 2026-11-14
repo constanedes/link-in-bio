@@ -15,6 +15,7 @@ import threading
 import time
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
+SITE = ROOT / "public"
 PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 8080
 WATCHED = ("*.html", "*.css", "*.js")
 POLL_SECONDS = 1.0
@@ -23,8 +24,8 @@ POLL_SECONDS = 1.0
 def compute_fingerprint():
     parts = []
     for pattern in WATCHED:
-        for path in sorted(ROOT.rglob(pattern)):
-            if path.is_file():
+        for path in sorted(SITE.rglob(pattern)):
+            if path.is_file() and "__pycache__" not in str(path):
                 parts.append(f"{path}:{path.stat().st_mtime_ns}")
     return ";".join(parts)
 
@@ -57,7 +58,7 @@ RELOAD_JS = b"""<script>
 
 class Handler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, directory=str(ROOT), **kwargs)
+        super().__init__(*args, directory=str(SITE), **kwargs)
 
     def end_headers(self):
         # Never cache in dev
@@ -74,7 +75,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             self.wfile.write(body)
             return
         if self.path in ("/", "/index.html"):
-            index = ROOT / "index.html"
+            index = SITE / "index.html"
             if index.is_file():
                 html = index.read_bytes()
                 if b"/__reload" not in html:
@@ -89,8 +90,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
     def send_error(self, code, message=None, explain=None):
         # Serve our styled 404 page instead of the default error page
-        if code == 404 and (ROOT / "404.html").is_file():
-            body = (ROOT / "404.html").read_bytes()
+        if code == 404 and (SITE / "404.html").is_file():
+            body = (SITE / "404.html").read_bytes()
             self.send_response(404)
             self.send_header("Content-Type", "text/html; charset=utf-8")
             self.send_header("Content-Length", str(len(body)))

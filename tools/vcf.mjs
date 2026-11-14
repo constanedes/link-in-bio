@@ -4,15 +4,15 @@
  * single source of truth for contact data; the vCard is a build artifact.
  *
  * Usage: node tools/vcf.mjs [output-path]
- * Writes to assets/constantino-edes.vcf by default (pass a path to write to
- * dist/assets instead).
+ * Writes to public/assets/constantino-edes.vcf by default (the deploy only
+ * uploads public/).
  */
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 
-const out = process.argv[2] ?? "assets/constantino-edes.vcf";
+const out = process.argv[2] ?? "public/assets/constantino-edes.vcf";
 const root = new URL("..", import.meta.url).pathname;
-const site = JSON.parse(readFileSync(resolve(root, "data/site.json"), "utf8"));
+const site = JSON.parse(readFileSync(resolve(root, "public/data/site.json"), "utf8"));
 
 const { profile, links } = site;
 const emailLink = links.find((l) => l.url.startsWith("mailto:"));
