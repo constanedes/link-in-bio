@@ -81,8 +81,8 @@ function expandableEmail(link) {
   const open = document.createElement("a");
   open.href = link.url;
   open.className = "sub-action";
-  open.innerHTML = `${icon("mail", 18)}<span>Open email client</span>`;
-  open.setAttribute("aria-label", `Open email client for ${address}`);
+  open.innerHTML = `${icon("mail", 18)}<span>Send contact email</span>`;
+  open.setAttribute("aria-label", `Send contact email to ${address}`);
 
   const copyBtn = document.createElement("button");
   copyBtn.type = "button";
