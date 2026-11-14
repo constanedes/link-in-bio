@@ -363,12 +363,8 @@ theme-toggle {
 }
 .highlight a {
   color: var(--accent);
-  text-decoration-color: transparent;
+  text-decoration: underline;
   text-underline-offset: 3px;
-  transition: text-decoration-color var(--speed) ease;
-}
-.highlight a:hover {
-  text-decoration-color: currentcolor;
 }
 .highlight .star {
   margin-right: 0.15rem;
